@@ -32,7 +32,7 @@ class DatabaseClient {
     await db.execute('''
     CREATE TABLE Game(
     id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
     )''');
   }
 
