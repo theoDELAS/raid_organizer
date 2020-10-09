@@ -14,11 +14,13 @@ class GameDetail extends StatefulWidget {
 }
 
 class _GameDetailState extends State<GameDetail> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
+      appBar: new AppBar(
+        title: new Text(widget.game.name),
+      ),
+      backgroundColor: Colors.green,
     );
   }
 }
