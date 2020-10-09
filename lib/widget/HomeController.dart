@@ -3,6 +3,7 @@ import 'package:raid_organizer/model/database.dart';
 import 'dart:async';
 import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/widget/EmptyData.dart';
+import 'package:raid_organizer/widget/GameDetails.dart';
 
 class HomeController extends StatefulWidget {
   HomeController({Key key, this.title}) : super(key: key);
@@ -16,6 +17,8 @@ class HomeController extends StatefulWidget {
 class _HomeControllerState extends State<HomeController> {
   String newList;
   List<Game> games;
+  String name;
+  String image;
 
   @override
   void initState() {
@@ -57,6 +60,15 @@ class _HomeControllerState extends State<HomeController> {
                     leading: new IconButton(
                         icon: new Icon(Icons.edit),
                         onPressed: (() => add(game))),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (BuildContext buildContext) {
+                                return new GameDetail(game);
+                              },
+                              fullscreenDialog: true));
+                    },
                   );
                 }));
   }
@@ -70,7 +82,7 @@ class _HomeControllerState extends State<HomeController> {
               title: new Text('Ajouter un jeu'),
               content: new TextField(
                 decoration: new InputDecoration(
-                    labelText: "Liste: ",
+                    labelText: "Nouveau jeu : ",
                     hintText:
                         (game == null) ? "Ex: Fifa21, Dofus, ..." : game.name),
                 onChanged: (String str) {
@@ -87,7 +99,9 @@ class _HomeControllerState extends State<HomeController> {
                     if (newList != null) {
                       if (game == null) {
                         game = new Game();
-                        Map<String, dynamic> map = {'name': newList};
+                        Map<String, dynamic> map = {
+                          'name': newList,
+                        };
                         game.fromMap(map);
                       } else {
                         game.name = newList;
