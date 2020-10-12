@@ -22,25 +22,46 @@ class _GameDetailState extends State<GameDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.game.name),
-      ),
-      body: new FlatButton(
-          color: Colors.blue,
-          textColor: Colors.white,
-          disabledColor: Colors.blue,
-          disabledTextColor: Colors.black,
-          padding: EdgeInsets.all(8.0),
-          splashColor: Colors.blueAccent,
-          onPressed: (() {
-            DatabaseClient().deleteGame(widget.game.id, 'game');
-          }),
-          child: Text(
-            "TEST",
-            style: TextStyle(fontSize: 20),
-          )),
-      backgroundColor: Colors.green,
-    );
+        appBar: new AppBar(
+          title: new Text(widget.game.name),
+        ),
+        body: Row(
+          children: <Widget>[
+            FlatButton(
+              color: Colors.red,
+              textColor: Colors.white,
+              disabledColor: Colors.grey,
+              disabledTextColor: Colors.black,
+              padding: EdgeInsets.all(15.0),
+              splashColor: Colors.blueAccent,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  side: BorderSide(color: Colors.red)),
+              onPressed: (() {
+                DatabaseClient().deleteGame(widget.game.id, 'game');
+              }),
+              child: Text(
+                "SUPPRIMER",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            FlatButton(
+                color: Colors.blue,
+                textColor: Colors.white,
+                disabledColor: Colors.grey,
+                disabledTextColor: Colors.black,
+                padding: EdgeInsets.all(15.0),
+                splashColor: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                    side: BorderSide(color: Colors.black38)),
+                onPressed: (() => update(widget.game)),
+                child: Text(
+                  "MODIFIER",
+                  style: TextStyle(fontSize: 20),
+                )),
+          ],
+        ));
   }
 
   Future<Null> update(Game game) async {
