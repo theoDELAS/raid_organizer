@@ -19,6 +19,7 @@ class DatabaseClient {
     }
   }
 
+  // Création de la base de données
   Future create() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String databaseDirectory = join(directory.path, 'database.db');
@@ -28,12 +29,31 @@ class DatabaseClient {
     return bdd;
   }
 
+  // Création des tables
   Future _onCreate(Database db, int version) async {
     await db.execute('''
     CREATE TABLE Game(
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
     )''');
+    await db.execute('''
+    CREATE TABLE User(
+      id INTEGER PRIMARY KEY,
+      username TEXT NOT NULL,
+      mail TEXT NULL,
+      image TEXT NULL,
+      password TEXT NULL
+    )
+    ''');
+    await db.execute('''
+    CREATE TABLE Events(
+      id INTEGER PRIMARY KEY,
+      game TEXT NULL,
+      description TEXT NULL,
+      members INT NULL,
+      
+    )
+    ''');
   }
 
   // Ajout des données
