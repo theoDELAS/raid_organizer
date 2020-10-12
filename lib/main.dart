@@ -31,14 +31,88 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey.shade700,
       appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Column(
-        children: <Widget>[
-          Carousel(),
+        backgroundColor: Colors.blueGrey.shade700,
+        leading: CircleAvatar(
+          radius: 50,
+          backgroundImage: AssetImage('images/ecureuil.jpg'),
+        ),
+        title: Center(
+          child: Text(
+            widget.title,
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            iconSize: 40,
+            icon: Icon(
+              Icons.group,
+              color: Colors.green,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
         ],
-      )
+      ),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(7),
+                ),
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              // color: Colors.white,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: IconButton(
+                      iconSize: 30,
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        // do something
+                      },
+                    ),
+                  ),
+                  VerticalDivider(),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Ma Liste',
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                        ),
+                        IconButton(
+                          iconSize: 30,
+                          icon: Icon(
+                            Icons.add,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            // do something
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Carousel(),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -51,32 +125,47 @@ class Carousel extends StatefulWidget {
 class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        aspectRatio: 16/9,
-        viewportFraction: 0.8,
-        initialPage: 0,
-        enableInfiniteScroll: true,
-        reverse: false,
-        autoPlay: false,
-        enlargeCenterPage: true,
-        scrollDirection: Axis.horizontal,
-      ),
-      items: [1,2,3,4,5].map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 20),
+      child: CarouselSlider(
+        options: CarouselOptions(
+          aspectRatio: 16 / 5,
+          viewportFraction: 0.5,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: false,
+          enlargeCenterPage: true,
+          scrollDirection: Axis.horizontal,
+        ),
+        items: [1, 2, 3, 4, 5].map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(
-                    color: Colors.amber
+                decoration: BoxDecoration(color: Colors.amber),
+                child: Text(
+                  'text $i',
+                  style: TextStyle(fontSize: 16.0),
                 ),
-                child: Text('text $i', style: TextStyle(fontSize: 16.0),)
-            );
-          },
-        );
-      }).toList(),
+              );
+            },
+          );
+        }).toList(),
+      ),
     );
   }
 }
 
+class VerticalDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      height: 30.0,
+      width: 1.0,
+      color: Colors.black,
+      margin: const EdgeInsets.symmetric(horizontal: 15),
+    );
+  }
+}
