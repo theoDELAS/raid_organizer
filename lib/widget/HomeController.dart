@@ -47,19 +47,6 @@ class _HomeControllerState extends State<HomeController> {
                   Game game = games[g];
                   return new ListTile(
                     title: new Text(game.name),
-                    trailing: new IconButton(
-                        icon: new Icon(Icons.delete),
-                        onPressed: () {
-                          DatabaseClient()
-                              .deleteGame(game.id, 'game')
-                              .then((int) {
-                            print("L'int a été récupéré : $int");
-                            getGames();
-                          });
-                        }),
-                    leading: new IconButton(
-                        icon: new Icon(Icons.edit),
-                        onPressed: (() => add(game))),
                     onTap: () {
                       Navigator.push(
                           context,
@@ -67,7 +54,7 @@ class _HomeControllerState extends State<HomeController> {
                               builder: (BuildContext buildContext) {
                                 return new GameDetail(game);
                               },
-                              fullscreenDialog: true));
+                              fullscreenDialog: false));
                     },
                   );
                 }));
@@ -82,7 +69,7 @@ class _HomeControllerState extends State<HomeController> {
               title: new Text('Ajouter un jeu'),
               content: new TextField(
                 decoration: new InputDecoration(
-                    labelText: "Nouveau jeu : ",
+                    labelText: "Nom du jeu : ",
                     hintText:
                         (game == null) ? "Ex: Fifa21, Dofus, ..." : game.name),
                 onChanged: (String str) {
