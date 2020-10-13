@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.blueGrey.shade700,
         leading: CircleAvatar(
           radius: 50,
-          backgroundImage: AssetImage('images/ecureuil.jpg'),
+          backgroundImage: AssetImage('images/test4.jpg'),
         ),
         title: Center(
           child: Text(
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Radius.circular(7),
                 ),
               ),
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
               // color: Colors.white,
               child: Row(
                 children: <Widget>[
@@ -138,17 +138,13 @@ class _CarouselState extends State<Carousel> {
           enlargeCenterPage: true,
           scrollDirection: Axis.horizontal,
         ),
-        items: [1, 2, 3, 4, 5].map((i) {
+        items: [1, 2, 3, 4].map((i) {
           return Builder(
             builder: (BuildContext context) {
               return Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(color: Colors.amber),
-                child: Text(
-                  'text $i',
-                  style: TextStyle(fontSize: 16.0),
-                ),
+                child: Image.network('https://picsum.photos/200/12$i')
               );
             },
           );
