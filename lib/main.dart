@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:raid_organizer/widget/HomeController.dart';
+import 'widget/HomeController.dart';
 
 void main() {
   runApp(MyApp());
@@ -142,10 +144,9 @@ class _CarouselState extends State<Carousel> {
           return Builder(
             builder: (BuildContext context) {
               return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                child: Image.network('https://picsum.photos/200/12$i')
-              );
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Image.network('https://picsum.photos/200/12$i'));
             },
           );
         }).toList(),
