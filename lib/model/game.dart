@@ -4,8 +4,6 @@ class Game {
   // String image;
   // String description;
 
-  Game();
-
   fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
     this.name = map['name'];

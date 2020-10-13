@@ -28,7 +28,22 @@ class _GameDetailState extends State<GameDetail> {
         body: Row(
           children: <Widget>[
             FlatButton(
-              color: Colors.red,
+                color: Colors.blue[800],
+                textColor: Colors.white,
+                disabledColor: Colors.grey,
+                disabledTextColor: Colors.black,
+                padding: EdgeInsets.all(15.0),
+                splashColor: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                    side: BorderSide(color: Colors.blue)),
+                onPressed: (() => update(widget.game)),
+                child: Text(
+                  "MODIFIER",
+                  style: TextStyle(fontSize: 20),
+                )),
+            FlatButton(
+              color: Colors.red[800],
               textColor: Colors.white,
               disabledColor: Colors.grey,
               disabledTextColor: Colors.black,
@@ -45,21 +60,6 @@ class _GameDetailState extends State<GameDetail> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            FlatButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                disabledColor: Colors.grey,
-                disabledTextColor: Colors.black,
-                padding: EdgeInsets.all(15.0),
-                splashColor: Colors.blueAccent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
-                    side: BorderSide(color: Colors.black38)),
-                onPressed: (() => update(widget.game)),
-                child: Text(
-                  "MODIFIER",
-                  style: TextStyle(fontSize: 20),
-                )),
           ],
         ));
   }
