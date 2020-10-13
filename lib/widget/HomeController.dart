@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:raid_organizer/model/database.dart';
 import 'dart:async';
 import 'package:raid_organizer/model/game.dart';
+import 'package:raid_organizer/widget/CarouselController.dart' as carousel;
 import 'package:raid_organizer/widget/EmptyData.dart';
 import 'package:raid_organizer/widget/GameDetails.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:developer';
 
 class HomeController extends StatefulWidget {
   HomeController({Key key, this.title}) : super(key: key);
@@ -17,47 +20,100 @@ class HomeController extends StatefulWidget {
 class _HomeControllerState extends State<HomeController> {
   String newList;
   List<Game> games;
-  String name;
-  String image;
-
-  @override
-  void initState() {
-    super.initState();
-    getGames();
-  }
 
   @override
   Widget build(BuildContext context) {
+    inspect(games);
     return Scaffold(
+        backgroundColor: Colors.blueGrey.shade700,
         appBar: AppBar(
-          title: Text(widget.title),
+          backgroundColor: Colors.blueGrey.shade700,
+          leading: CircleAvatar(
+            radius: 50,
+            backgroundImage: AssetImage('images/test4.jpg'),
+          ),
+          title: Center(
+            child: Text(
+              widget.title,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+          ),
           actions: <Widget>[
-            new FlatButton(
-              onPressed: (() => add(null)),
-              child: new Text("Ajouter",
-                  style: new TextStyle(color: Colors.white)),
+            IconButton(
+              iconSize: 40,
+              icon: Icon(
+                Icons.group,
+                color: Colors.green,
+              ),
+              onPressed: () {
+                // do something
+              },
             )
           ],
+          // actions: <Widget>[
+          //   new FlatButton(
+          //     onPressed: (() => add(null)),
+          //     child: new Text("Ajouter",
+          //         style: new TextStyle(color: Colors.white)),
+          //   )
+          // ],
         ),
-        body: (games == null || games.length == 0)
-            ? new EmptyData()
-            : new ListView.builder(
-                itemCount: games.length,
-                itemBuilder: (context, g) {
-                  Game game = games[g];
-                  return new ListTile(
-                    title: new Text(game.name),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (BuildContext buildContext) {
-                                return new GameDetail(game);
-                              },
-                              fullscreenDialog: false));
-                    },
-                  );
-                }));
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(7),
+                  ),
+                ),
+                margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                // color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: IconButton(
+                        iconSize: 30,
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          // do something
+                        },
+                      ),
+                    ),
+                    carousel.VerticalDivider(),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Ma Liste',
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                          ),
+                          IconButton(
+                            iconSize: 30,
+                            icon: Icon(
+                              Icons.add,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              // do something
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              carousel.Carousel(),
+            ],
+          ),
+        ));
   }
 
   Future<Null> add(Game game) async {
@@ -93,7 +149,7 @@ class _HomeControllerState extends State<HomeController> {
                       } else {
                         game.name = newList;
                       }
-                      DatabaseClient().upsertGame(game).then((g) => getGames());
+                      DatabaseClient().upsertGame(game);
                       newList = null;
                     }
                     Navigator.pop(buildContext);
@@ -107,13 +163,5 @@ class _HomeControllerState extends State<HomeController> {
                 )
               ]);
         });
-  }
-
-  void getGames() {
-    DatabaseClient().showGames().then((games) {
-      setState(() {
-        this.games = games;
-      });
-    });
   }
 }
