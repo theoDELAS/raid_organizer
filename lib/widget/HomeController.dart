@@ -3,9 +3,6 @@ import 'package:raid_organizer/model/database.dart';
 import 'dart:async';
 import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/widget/CarouselController.dart' as carousel;
-import 'package:raid_organizer/widget/EmptyData.dart';
-import 'package:raid_organizer/widget/GameDetails.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:developer';
 
 class HomeController extends StatefulWidget {

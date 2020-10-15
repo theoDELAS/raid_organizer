@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/model/database.dart';
-import 'package:raid_organizer/widget/HomeController.dart';
 
 class GameDetail extends StatefulWidget {
   Game game;
