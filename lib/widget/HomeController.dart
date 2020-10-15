@@ -3,7 +3,9 @@ import 'package:raid_organizer/model/database.dart';
 import 'dart:async';
 import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/widget/CarouselController.dart' as carousel;
-import 'dart:developer';
+import 'package:raid_organizer/widget/appBar.dart';
+
+import 'appBar.dart';
 
 class HomeController extends StatefulWidget {
   HomeController({Key key, this.title}) : super(key: key);
@@ -20,54 +22,26 @@ class _HomeControllerState extends State<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    inspect(games);
     return Scaffold(
         backgroundColor: Colors.blueGrey.shade700,
-        appBar: AppBar(
-          backgroundColor: Colors.blueGrey.shade700,
-          leading: CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage('images/test4.jpg'),
-          ),
-          title: Center(
-            child: Text(
-              widget.title,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              iconSize: 40,
-              icon: Icon(
-                Icons.group,
-                color: Colors.green,
-              ),
-              onPressed: () {
-                // do something
-              },
-            ),
-            new FlatButton(
-              onPressed: (() => add(null)),
-              child: new Text("Ajouter",
-                  style: new TextStyle(color: Colors.white)),
-            )
-          ],
-          // actions: <Widget>[
-
-          // ],
-        ),
+        appBar: appbar(context),
         body: SafeArea(
           child: Column(
             children: <Widget>[
+              FlatButton(
+                onPressed: (() => add(null)),
+                child: new Text("Ajouter",
+                    style:
+                        new TextStyle(color: Colors.white, fontFamily: 'Jost')),
+              ),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color.fromRGBO(2, 196, 131, 1),
                   borderRadius: BorderRadius.all(
                     Radius.circular(7),
                   ),
                 ),
                 margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                // color: Colors.white,
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -89,7 +63,8 @@ class _HomeControllerState extends State<HomeController> {
                           Expanded(
                             child: Text(
                               'Ma Liste',
-                              style: TextStyle(fontSize: 20.0),
+                              style:
+                                  TextStyle(fontSize: 20.0, fontFamily: 'Jost'),
                             ),
                           ),
                           IconButton(
