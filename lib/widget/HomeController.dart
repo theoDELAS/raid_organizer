@@ -48,14 +48,15 @@ class _HomeControllerState extends State<HomeController> {
               onPressed: () {
                 // do something
               },
+            ),
+            new FlatButton(
+              onPressed: (() => add(null)),
+              child: new Text("Ajouter",
+                  style: new TextStyle(color: Colors.white)),
             )
           ],
           // actions: <Widget>[
-          //   new FlatButton(
-          //     onPressed: (() => add(null)),
-          //     child: new Text("Ajouter",
-          //         style: new TextStyle(color: Colors.white)),
-          //   )
+
           // ],
         ),
         body: SafeArea(
@@ -164,4 +165,12 @@ class _HomeControllerState extends State<HomeController> {
               ]);
         });
   }
+
+  // void getGames() {
+  //   DatabaseClient().showGames().then((games) {
+  //     setState(() {
+  //       this.games = games;
+  //     });
+  //   });
+  // }
 }
