@@ -34,8 +34,14 @@ class DatabaseClient {
     await db.execute('''
     CREATE TABLE Game(
     id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL
     )''');
+    // await db.transaction((txn) async {
+    await db.rawInsert('''
+      INSERT INTO Game(name) VALUES ("datadetest")
+      ''');
+    // print('test2 $test');
+    // });
     await db.execute('''
     CREATE TABLE User(
       id INTEGER PRIMARY KEY,
@@ -50,8 +56,7 @@ class DatabaseClient {
       id INTEGER PRIMARY KEY,
       game TEXT NULL,
       description TEXT NULL,
-      members INT NULL,
-      
+      members INT NULL
     )
     ''');
   }
