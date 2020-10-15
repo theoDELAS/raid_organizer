@@ -18,6 +18,12 @@ class _CarouselState extends State<Carousel> {
   List<Game> games;
 
   @override
+  void initState() {
+    super.initState();
+    getGames();
+  }
+
+  @override
   Widget build(BuildContext context) {
     inspect(games);
     return Container(
@@ -39,14 +45,23 @@ class _CarouselState extends State<Carousel> {
               return Container(
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  // child: Text(i.name));
                   child: Image.network(
-                      'https://picsum.photos/id/${i.id}/200/120/'));
+                    'https://picsum.photos/id/${i.id + 10}/200/120/',
+                  ));
             },
           );
         }).toList(),
       ),
     );
+  }
+
+  void getGames() {
+    inspect(games);
+    DatabaseClient().showGames().then((games) {
+      setState(() {
+        this.games = games;
+      });
+    });
   }
 }
 
