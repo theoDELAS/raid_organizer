@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/model/database.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'appBar.dart';
 
 class GameDetail extends StatefulWidget {
   Game game;
@@ -21,9 +24,8 @@ class _GameDetailState extends State<GameDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(
-          title: new Text(widget.game.name),
-        ),
+        backgroundColor: Colors.blueGrey.shade700,
+        appBar: appbar(context),
         body: Row(
           children: <Widget>[
             FlatButton(
@@ -39,7 +41,7 @@ class _GameDetailState extends State<GameDetail> {
                 onPressed: (() => update(widget.game)),
                 child: Text(
                   "MODIFIER",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, fontFamily: 'Jost'),
                 )),
             FlatButton(
               color: Colors.red[800],
@@ -56,7 +58,7 @@ class _GameDetailState extends State<GameDetail> {
               }),
               child: Text(
                 "SUPPRIMER",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20, fontFamily: 'Jost'),
               ),
             ),
           ],
@@ -85,7 +87,7 @@ class _GameDetailState extends State<GameDetail> {
                     child: new Text('Annuler')),
                 new FlatButton(
                   onPressed: () {
-                    // Ajouter à la base de données
+                    // Confirmer la modification
                     if (newList != null) {
                       if (game == null) {
                         game = new Game();
