@@ -60,19 +60,21 @@ class _GameDetailsControllerState extends State<GameDetailsController> {
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              widget.game.name.toUpperCase(),
-              style: TextStyle(
-                  fontSize: 27,
-                  color: Colors.grey[900],
-                  fontWeight: FontWeight.bold),
-            ),
+            Text(widget.game.name.toUpperCase(),
+                style: TextStyle(
+                    fontSize: 27,
+                    color: Colors.grey[900],
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Jost')),
             // SizedBox(height: 20),
             Container(
                 padding: EdgeInsets.all(10),
                 child: Text(
                   widget.game.description,
-                  style: TextStyle(color: Colors.grey[850], fontSize: 17),
+                  style: TextStyle(
+                      color: Colors.grey[850],
+                      fontSize: 17,
+                      fontFamily: 'Jost'),
                 )),
             Row(children: <Widget>[
               FlatButton(
