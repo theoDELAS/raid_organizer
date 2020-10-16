@@ -18,8 +18,18 @@ class GameDetail extends StatefulWidget {
 }
 
 class _GameDetailState extends State<GameDetail> {
+  @override
+  void initState() {
+    super.initState();
+    getGames();
+  }
+
   String newList;
   List<Game> games;
+
+  String name;
+  String image;
+  String description;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +38,7 @@ class _GameDetailState extends State<GameDetail> {
         appBar: appbar(context),
         body: Row(
           children: <Widget>[
+            Text(widget.game.name),
             FlatButton(
                 color: Colors.blue[800],
                 textColor: Colors.white,
@@ -68,40 +79,40 @@ class _GameDetailState extends State<GameDetail> {
   Future<Null> update(Game game) async {
     await showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (BuildContext buildContext) {
-          return new AlertDialog(
-              title: new Text('Modifier le jeu'),
-              content: new TextField(
-                decoration: new InputDecoration(
-                    labelText: "Nouveau nom : ",
-                    hintText:
-                        (game == null) ? "Ex: Fifa21, Dofus, ..." : game.name),
-                onChanged: (String str) {
-                  newList = str;
-                },
-              ),
+          return new CupertinoAlertDialog(
+              title: new Text('Modifier ${game.name}'),
+              content: Card(
+                  child: Column(children: <Widget>[
+                myTextField(TypeTextField.name, "Nom du jeu"),
+                myTextField(TypeTextField.image, "Image du jeu"),
+                myTextField(TypeTextField.description, "Description du jeu"),
+              ])),
               actions: <Widget>[
                 new FlatButton(
                     onPressed: (() => Navigator.pop(buildContext)),
                     child: new Text('Annuler')),
                 new FlatButton(
                   onPressed: () {
-                    // Confirmer la modification
-                    if (newList != null) {
-                      if (game == null) {
-                        game = new Game();
-                        Map<String, dynamic> map = {
-                          'name': newList,
-                        };
-                        game.fromMap(map);
-                      } else {
-                        game.name = newList;
+                    // Ajouter à la base de données
+                    if (name != null) {
+                      Map<String, dynamic> map = {'name': name};
+                      if (image != null) {
+                        map['image'] = image;
                       }
-                      DatabaseClient().upsertGame(game).then((g) => getGames());
-                      newList = null;
+                      if (description != null) {
+                        map['description'] = description;
+                      }
+                      // Game game = new Game();
+                      game.fromMap(map);
+                      DatabaseClient().upsertGame(game).then((value) {
+                        name = null;
+                        image = null;
+                        description = null;
+                        Navigator.pop(context);
+                      });
                     }
-                    Navigator.pop(buildContext);
                   },
                   child: new Text(
                     'Valider',
@@ -114,6 +125,28 @@ class _GameDetailState extends State<GameDetail> {
         });
   }
 
+  TextField myTextField(TypeTextField type, String label) {
+    return TextField(
+      decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent))),
+      onChanged: (String string) {
+        switch (type) {
+          case TypeTextField.name:
+            name = string;
+            break;
+          case TypeTextField.image:
+            image = string;
+            break;
+          case TypeTextField.description:
+            description = string;
+            break;
+        }
+      },
+    );
+  }
+
   void getGames() {
     DatabaseClient().showGames().then((games) {
       setState(() {
@@ -122,3 +155,5 @@ class _GameDetailState extends State<GameDetail> {
     });
   }
 }
+
+enum TypeTextField { name, image, description }
