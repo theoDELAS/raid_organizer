@@ -65,7 +65,7 @@ class _HomeControllerState extends State<HomeController> {
                         iconSize: 30,
                         icon: Icon(
                           Icons.search,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                         onPressed: () {
                           // do something
@@ -79,15 +79,17 @@ class _HomeControllerState extends State<HomeController> {
                           Expanded(
                             child: Text(
                               'Ma Liste',
-                              style:
-                                  TextStyle(fontSize: 20.0, fontFamily: 'Jost'),
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontFamily: 'Jost',
+                                  color: Colors.white),
                             ),
                           ),
                           IconButton(
                             iconSize: 30,
                             icon: Icon(
                               Icons.add,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             onPressed: () {
                               // do something
@@ -113,8 +115,8 @@ class _HomeControllerState extends State<HomeController> {
         context: context,
         barrierDismissible: true,
         builder: (BuildContext buildContext) {
-          return new CupertinoAlertDialog(
-              title: new Text('Ajouter un jeu'),
+          return AlertDialog(
+              title: Text('Ajouter un jeu'),
               content: Card(
                   child: Column(children: <Widget>[
                 myTextField(TypeTextField.name, "Nom du jeu"),
@@ -122,10 +124,10 @@ class _HomeControllerState extends State<HomeController> {
                 myTextField(TypeTextField.description, "Description du jeu"),
               ])),
               actions: <Widget>[
-                new FlatButton(
+                FlatButton(
                     onPressed: (() => Navigator.pop(buildContext)),
-                    child: new Text('Annuler')),
-                new FlatButton(
+                    child: Text('Annuler')),
+                FlatButton(
                   onPressed: () {
                     // Ajouter à la base de données
                     if (name != null) {
@@ -146,9 +148,9 @@ class _HomeControllerState extends State<HomeController> {
                       });
                     }
                   },
-                  child: new Text(
+                  child: Text(
                     'Valider',
-                    style: new TextStyle(
+                    style: TextStyle(
                       color: Colors.green,
                     ),
                   ),
