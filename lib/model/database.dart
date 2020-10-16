@@ -34,11 +34,13 @@ class DatabaseClient {
     await db.execute('''
     CREATE TABLE Game(
     id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    image TEXT NULL,
+    description TEXT NULL
     )''');
     // await db.transaction((txn) async {
     await db.rawInsert('''
-      INSERT INTO Game(name) VALUES ("datadetest")
+      INSERT INTO Game(name, image, description) VALUES ("Dofus", "https://jolstatic.fr/www/captures/93/7/123967.png", "MMORPG t'as capté")
       ''');
     // print('test2 $test');
     // });
