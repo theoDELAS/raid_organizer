@@ -99,7 +99,10 @@ class _HomeControllerState extends State<HomeController> {
                   ],
                 ),
               ),
-              carousel.Carousel(),
+              (games == null || games.length == 0)
+                  ? Text("Vous n'avez pas de jeu dans votre liste.",
+                      style: TextStyle(color: Colors.redAccent))
+                  : carousel.Carousel(),
             ],
           ),
         ));
