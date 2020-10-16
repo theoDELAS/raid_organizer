@@ -70,7 +70,7 @@ class _EvenementsControllerState extends State<EvenementsController> {
             Text(
                 "Mes évènements ".toUpperCase() +
                     widget.game.name.toUpperCase(),
-                style: TextStyle(fontSize: 26, fontFamily: 'Jost')),
+                style: TextStyle(fontSize: 20, fontFamily: 'Jost')),
             SizedBox(height: 10),
             GestureDetector(
               child: Container(
@@ -96,7 +96,7 @@ class _EvenementsControllerState extends State<EvenementsController> {
             SizedBox(height: 40),
             Text(
               "Activités en cours".toUpperCase(),
-              style: TextStyle(fontSize: 26, fontFamily: 'Jost'),
+              style: TextStyle(fontSize: 20, fontFamily: 'Jost'),
             ),
           ],
         )));
