@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:raid_organizer/model/database.dart';
 import 'dart:async';
@@ -20,6 +21,20 @@ class _HomeControllerState extends State<HomeController> {
   String newList;
   List<Game> games;
 
+  String name;
+  String image;
+  String description;
+
+  @override
+  void initState() {
+    super.initState();
+    DatabaseClient().showGames().then((value) {
+      setState(() {
+        games = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +44,7 @@ class _HomeControllerState extends State<HomeController> {
           child: Column(
             children: <Widget>[
               FlatButton(
+                color: Colors.grey,
                 onPressed: (() => add(null)),
                 child: new Text("Ajouter",
                     style:
@@ -92,19 +108,16 @@ class _HomeControllerState extends State<HomeController> {
   Future<Null> add(Game game) async {
     await showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (BuildContext buildContext) {
-          return new AlertDialog(
+          return new CupertinoAlertDialog(
               title: new Text('Ajouter un jeu'),
-              content: new TextField(
-                decoration: new InputDecoration(
-                    labelText: "Nom du jeu : ",
-                    hintText:
-                        (game == null) ? "Ex: Fifa21, Dofus, ..." : game.name),
-                onChanged: (String str) {
-                  newList = str;
-                },
-              ),
+              content: Card(
+                  child: Column(children: <Widget>[
+                myTextField(TypeTextField.name, "Nom du jeu"),
+                myTextField(TypeTextField.image, "Image du jeu"),
+                myTextField(TypeTextField.description, "Description du jeu"),
+              ])),
               actions: <Widget>[
                 new FlatButton(
                     onPressed: (() => Navigator.pop(buildContext)),
@@ -112,20 +125,23 @@ class _HomeControllerState extends State<HomeController> {
                 new FlatButton(
                   onPressed: () {
                     // Ajouter à la base de données
-                    if (newList != null) {
-                      if (game == null) {
-                        game = new Game();
-                        Map<String, dynamic> map = {
-                          'name': newList,
-                        };
-                        game.fromMap(map);
-                      } else {
-                        game.name = newList;
+                    if (name != null) {
+                      Map<String, dynamic> map = {'name': name};
+                      if (image != null) {
+                        map['image'] = image;
                       }
-                      DatabaseClient().upsertGame(game);
-                      newList = null;
+                      if (description != null) {
+                        map['description'] = description;
+                      }
+                      Game game = new Game();
+                      game.fromMap(map);
+                      DatabaseClient().upsertGame(game).then((value) {
+                        name = null;
+                        image = null;
+                        description = null;
+                        Navigator.pop(context);
+                      });
                     }
-                    Navigator.pop(buildContext);
                   },
                   child: new Text(
                     'Valider',
@@ -138,11 +154,35 @@ class _HomeControllerState extends State<HomeController> {
         });
   }
 
-  // void getGames() {
-  //   DatabaseClient().showGames().then((games) {
-  //     setState(() {
-  //       this.games = games;
-  //     });
-  //   });
-  // }
+  TextField myTextField(TypeTextField type, String label) {
+    return TextField(
+      decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent))),
+      onChanged: (String string) {
+        switch (type) {
+          case TypeTextField.name:
+            name = string;
+            break;
+          case TypeTextField.image:
+            image = string;
+            break;
+          case TypeTextField.description:
+            description = string;
+            break;
+        }
+      },
+    );
+  }
+
+  void getGames() {
+    DatabaseClient().showGames().then((games) {
+      setState(() {
+        this.games = games;
+      });
+    });
+  }
 }
+
+enum TypeTextField { name, image, description }
