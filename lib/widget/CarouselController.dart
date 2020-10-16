@@ -4,7 +4,7 @@ import 'package:raid_organizer/model/game.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:developer';
 
-import 'package:raid_organizer/widget/GameDetails.dart';
+import 'package:raid_organizer/widget/EvenementsController.dart';
 
 class Carousel extends StatefulWidget {
   @override
@@ -48,7 +48,7 @@ class _CarouselState extends State<Carousel> {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (BuildContext buildContext) {
-                      return GameDetail(game);
+                      return EvenementsController(game);
                     }));
                   });
             },
@@ -73,7 +73,7 @@ class VerticalDivider extends StatelessWidget {
     return new Container(
       height: 30.0,
       width: 1.0,
-      color: Colors.black,
+      color: Colors.white,
       margin: const EdgeInsets.symmetric(horizontal: 15),
     );
   }
