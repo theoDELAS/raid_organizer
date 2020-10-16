@@ -43,7 +43,7 @@ class _CarouselState extends State<Carousel> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
-                        'https://picsum.photos/id/${game.id + 10}/200/120/',
+                        game.image,
                       )),
                   onTap: () {
                     Navigator.push(context,
