@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:raid_organizer/model/event.dart';
 import 'package:raid_organizer/model/game.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
@@ -31,19 +31,21 @@ class DatabaseClient {
 
   // Création des tables
   Future _onCreate(Database db, int version) async {
+    // Table Game
     await db.execute('''
     CREATE TABLE Game(
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
     image TEXT NULL,
     description TEXT NULL
-    )''');
-    // await db.transaction((txn) async {
+    )
+    ''');
+    // Insertion de valeurs
     await db.rawInsert('''
-      INSERT INTO Game(name, image, description) VALUES ("Dofus", "https://jolstatic.fr/www/captures/93/7/123967.png", "MMORPG t'as capté")
-      ''');
-    // print('test2 $test');
-    // });
+    INSERT INTO Game(name, image, description) VALUES ("Dofus", "https://jolstatic.fr/www/captures/93/7/123967.png", "Dofus (prononcé /do.fousse/) est un jeu de rôle en ligne massivement multijoueur (MMORPG) français développé et édité par Ankama puis par sa filiale Ankama Games dès sa création en 2004.
+Projet débuté par Emmanuel Darras, Camille Chafer et Anthony Roux, sa toute première version — qui proposait uniquement du joueur contre joueur — s'intitulait Arty Slot : Duel et était le quatrième opus de la série Arty Slot. De fil en aiguille les développeurs améliorent le jeu, pour en arriver à une phase de bêta-test et changent le nom du jeu en Dofus. Après quelques mois, Dofus sort le 1er septembre 2004 en France. Une version 2.0 sort en 2009, avec de nouveaux graphismes."
+    )
+    ''');
     await db.execute('''
     CREATE TABLE User(
       id INTEGER PRIMARY KEY,
@@ -54,23 +56,35 @@ class DatabaseClient {
     )
     ''');
     await db.execute('''
-    CREATE TABLE Events(
+    CREATE TABLE Event(
       id INTEGER PRIMARY KEY,
       game TEXT NULL,
+      date DATETIME NULL,
       description TEXT NULL,
-      members INT NULL
+      slots INT NULL,
+      is_private BOOLEAN NULL,
+      user INT
     )
     ''');
   }
 
-  // Ajout des données
+  // CREATE
+  // Fonction d'ajout des données dans Game
   Future<Game> addGame(Game game) async {
     Database myDatabase = await database;
     game.id = await myDatabase.insert('game', game.toMap());
     return game;
   }
 
-  // Modification des données
+  // Fonction d'ajout des données dans Event
+  Future<Evenement> addEvent(Evenement evenement) async {
+    Database myDatabase = await database;
+    evenement.id = await myDatabase.insert('event', evenement.toMap());
+    return evenement;
+  }
+
+  // UPDATE
+  // Fonctions de modification des données Game
   Future<int> updateGame(Game game) async {
     Database myDatabase = await database;
     return myDatabase
@@ -86,6 +100,18 @@ class DatabaseClient {
           .update('game', game.toMap(), where: 'id = ?', whereArgs: [game.id]);
     }
     return game;
+  }
+
+  // Fonction de modification des données Evenement
+  Future<Evenement> upsertEvenement(Evenement evenement) async {
+    Database myDatabase = await database;
+    if (evenement.id == null) {
+      evenement.id = await myDatabase.insert('event', evenement.toMap());
+    } else {
+      await myDatabase.update('event', evenement.toMap(),
+          where: 'id = ?', whereArgs: [evenement.id]);
+    }
+    return evenement;
   }
 
   // Suppression des données
