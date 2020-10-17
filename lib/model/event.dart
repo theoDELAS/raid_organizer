@@ -5,7 +5,7 @@ class Evenement {
   DateTime date;
   int slots;
   bool is_private;
-  int user;
+  // int user;
 
   fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
@@ -14,7 +14,7 @@ class Evenement {
     this.description = map['description'];
     this.slots = map['slots'];
     this.is_private = map['is_private'];
-    this.user = map['user'];
+    // this.user = map['user'];
   }
 
   Map<String, dynamic> toMap() {
@@ -24,7 +24,7 @@ class Evenement {
       'description': this.description,
       'slots': this.slots,
       'is_private': this.is_private,
-      'user': this.user
+      // 'user': this.user
     };
     if (id != null) {
       map['id'] = this.id;
