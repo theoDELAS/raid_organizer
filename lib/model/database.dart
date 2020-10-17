@@ -63,6 +63,10 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
       password TEXT NULL
     )
     ''');
+    // Insertion de valeurs
+    await db.rawInsert('''
+    INSERT INTO User (username, mail, image, password) VALUES ("administrator", "admin@app.io", "https://backtowork.ch/wp-content/uploads/2020/05/user3.png", "admin")
+    ''');
     // Table Event
     await db.execute('''
     CREATE TABLE Event(
@@ -72,7 +76,6 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
       description TEXT NULL,
       slots INT NULL,
       is_private BOOLEAN NULL,
-      user INT
     )
     ''');
   }
