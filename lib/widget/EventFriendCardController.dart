@@ -11,14 +11,14 @@ class _EventFriendCardState extends State<EventFriendCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: EdgeInsets.only(right: 20, left: 20, bottom: 15),
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         decoration: BoxDecoration(
           color: Color.fromRGBO(0, 0, 0, 22),
           borderRadius: BorderRadius.all(
             Radius.circular(7),
           ),
         ),
-        margin: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -42,7 +42,7 @@ class _EventFriendCardState extends State<EventFriendCard> {
             Expanded(
               flex: 2,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     "Username",
@@ -54,6 +54,7 @@ class _EventFriendCardState extends State<EventFriendCard> {
                   ),
                   SizedBox(height: 20),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Icon(
                         Icons.person,
@@ -73,12 +74,14 @@ class _EventFriendCardState extends State<EventFriendCard> {
               ),
             ),
             Expanded(
-              flex: 3,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(7),
-                child: Image(
-                  width: 100,
-                  image: AssetImage("images/test1.jpg"),
+              flex: 4,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Image(
+                    image: AssetImage("images/test1.jpg"),
+                  ),
                 ),
               ),
             ),
