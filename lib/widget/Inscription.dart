@@ -32,7 +32,7 @@ class Inscription extends StatelessWidget {
                     labelText: 'Email',
                     border: OutlineInputBorder()
                   ),
-                  validator: (val) => val.isEmpty ? 'Entrez email': null,
+                  validator: (val) => val.isEmpty ? 'Saisissez votre email': null,
                   onChanged: (val) => email = val,
                 ),
                 SizedBox(height: 10.0),
@@ -43,7 +43,7 @@ class Inscription extends StatelessWidget {
                     ),
                   obscureText: true,
                   onChanged: (val) => password = val,
-                  validator: (val) => val.length < 6 ? 'Trop court' : null,
+                  validator: (val) => val.length < 6 ? 'Votre mot de passe est trop court (6 caractères min)' : null,
                 ),
                 SizedBox(height: 10.0),
                 TextFormField(
@@ -52,7 +52,7 @@ class Inscription extends StatelessWidget {
                       border: OutlineInputBorder()
                     ),
                   onChanged: (val) => confPassword = val,
-                  validator: (val) => confPassword != password ? 'Confirmez votre mdp' : null,
+                  validator: (val) => confPassword != password ? 'Confirmez votre mot de passe' : null,
                   obscureText: true,
                 ),
                 SizedBox(height: 10.0),
@@ -63,7 +63,8 @@ class Inscription extends StatelessWidget {
                   color: Color.fromRGBO(2, 196, 131, 1),
                   onPressed: (){
                     if(_keyForm.currentState.validate()){
-                      print('$email et $password');
+                      /*Changer la route vers la HomeController (err)*/
+                      Navigator.pushReplacementNamed(context, '/FriendsList');
                     }
                   },
                   child: Text(
