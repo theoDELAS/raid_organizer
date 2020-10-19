@@ -58,7 +58,7 @@ class Inscription extends StatelessWidget {
                 SizedBox(height: 10.0),
                 RaisedButton(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   color: Color.fromRGBO(2, 196, 131, 1),
                   onPressed: (){
