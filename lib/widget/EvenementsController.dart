@@ -208,13 +208,6 @@ class _EvenementsControllerState extends State<EvenementsController> {
                             SizedBox(height: 20),
                             myTextField(TypeTextField.description,
                                 "Description de l'évènement"),
-                            // NumberPicker.integer(
-                            //   initialValue: slots,
-                            //   minValue: 2,
-                            //   maxValue: 5,
-                            //   onChanged: (value) =>
-                            //       setState(() => slots = value),
-                            // )
                             SizedBox(height: 20),
                             Text(
                               "Nombre de participants".toUpperCase(),
