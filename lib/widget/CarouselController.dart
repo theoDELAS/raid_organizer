@@ -22,7 +22,6 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    inspect(games);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       child: CarouselSlider(
@@ -68,10 +67,14 @@ class _CarouselState extends State<Carousel> {
 }
 
 class VerticalDivider extends StatelessWidget {
+  VerticalDivider(this.param);
+
+  final double param;
+
   @override
   Widget build(BuildContext context) {
     return new Container(
-      height: 30.0,
+      height: this.param,
       width: 1.0,
       color: Colors.white,
       margin: const EdgeInsets.symmetric(horizontal: 15),
