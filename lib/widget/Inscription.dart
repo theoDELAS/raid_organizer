@@ -29,13 +29,13 @@ class Inscription extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'E-mail',
                     border: OutlineInputBorder()
                   ),
                   validator: (val) => val.isEmpty ? 'Saisissez votre email': null,
                   onChanged: (val) => email = val,
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 30.0),
                 TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Mot de passe',
@@ -45,7 +45,7 @@ class Inscription extends StatelessWidget {
                   onChanged: (val) => password = val,
                   validator: (val) => val.length < 6 ? 'Votre mot de passe est trop court (6 caractères min)' : null,
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 30.0),
                 TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Confirmez le mot de passe',
@@ -55,7 +55,7 @@ class Inscription extends StatelessWidget {
                   validator: (val) => confPassword != password ? 'Confirmez votre mot de passe' : null,
                   obscureText: true,
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 30.0),
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -68,8 +68,8 @@ class Inscription extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    'Inscription',
-                    style: TextStyle(color: Colors.white),
+                    "S'INSCRIRE",
+                    style: TextStyle(color: Colors.white, fontSize: 15.0)
                   ),
                 ),
               ],
