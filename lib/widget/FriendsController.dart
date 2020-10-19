@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:raid_organizer/widget/FriendsModel.dart';
+import 'package:raid_organizer/model/friends.dart';
 
 class FriendsList extends StatefulWidget {
   @override
@@ -8,7 +8,6 @@ class FriendsList extends StatefulWidget {
 }
 
 class _FriendsListState extends State<FriendsList> {
-
   List<Friends> friends = [
     Friends(nom: 'Amis1', imageProfil: 'image-1.jpg'),
     Friends(nom: 'Amis2', imageProfil: 'image-2.jpg'),
@@ -21,7 +20,7 @@ class _FriendsListState extends State<FriendsList> {
   ];
 
   /*Fenêtre modale*/
-  Widget _dialogBuilder(BuildContext context, Friends friends){
+  Widget _dialogBuilder(BuildContext context, Friends friends) {
     ThemeData localTheme = Theme.of(context);
 
     return SimpleDialog(
@@ -31,50 +30,45 @@ class _FriendsListState extends State<FriendsList> {
         /*afficher le jeu à la place de l'image Profil*/
         Image.asset('images/${friends.imageProfil}'),
         Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              children: <Widget> [
-                Text(
-                  friends.nom,
-                  style: localTheme.textTheme.display1,
-                ),
-                SizedBox(height: 20.0),
-                Text(
-                  'Descritpion du jeu',
-                   style: localTheme.textTheme.bodyText1,
-                ),
-                SizedBox(height: 20.0),
-                Align(
-                  alignment: Alignment.center,
-                  child: Wrap(
-                    children: <Widget>[
-                      FlatButton(
-                        /*Afficher les détails du jeu en cours: nb de joueurs... */
-                        onPressed: (){
-
-                        },
-                        child: Text(
-                          'REJOINDRE',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              Text(
+                friends.nom,
+                style: localTheme.textTheme.display1,
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Descritpion du jeu',
+                style: localTheme.textTheme.bodyText1,
+              ),
+              SizedBox(height: 20.0),
+              Align(
+                alignment: Alignment.center,
+                child: Wrap(children: <Widget>[
+                  FlatButton(
+                    /*Afficher les détails du jeu en cours: nb de joueurs... */
+                    onPressed: () {},
+                    child: Text(
+                      'REJOINDRE',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      RaisedButton(
-                        color: Color.fromRGBO(2, 196, 131, 1),
-                        onPressed: (){
-                          Navigator.pushReplacementNamed(context, '/FriendsList');
-                          // ignore: unnecessary_statements
-                          Navigator.of(context).pop;
-                        },
-                        child: Text('ANNULER'),
-                      )
-                    ]
+                    ),
                   ),
-                )
-              ],
-            ),
+                  RaisedButton(
+                    color: Color.fromRGBO(2, 196, 131, 1),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/FriendsList');
+                      // ignore: unnecessary_statements
+                      Navigator.of(context).pop;
+                    },
+                    child: Text('ANNULER'),
+                  )
+                ]),
+              )
+            ],
+          ),
         )
       ],
     );
@@ -88,9 +82,7 @@ class _FriendsListState extends State<FriendsList> {
       /*Navbar*/
       appBar: AppBar(
         backgroundColor: Colors.blueGrey.shade700,
-        title: Text(
-          'Mes Amis'
-        ),
+        title: Text('Mes Amis'),
         actions: <Widget>[
           Icon(
             Icons.search,
@@ -103,24 +95,26 @@ class _FriendsListState extends State<FriendsList> {
 
       /*Liste des Amis*/
       body: ListView.builder(
-        itemCount: friends.length,
-          itemBuilder: (context, index){
-
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-            child: Card(
-              color: Colors.blueGrey.shade700,
-              child: ListTile(
-                onTap: () => showDialog(context: context, builder: (context)
-                => _dialogBuilder(context, friends[index])),
-                title: Text(friends[index].nom,
-                  style: Theme.of(context).textTheme.title),
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage('images/${friends[index].imageProfil}'),
+          itemCount: friends.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+              child: Card(
+                color: Colors.blueGrey.shade700,
+                child: ListTile(
+                  onTap: () => showDialog(
+                      context: context,
+                      builder: (context) =>
+                          _dialogBuilder(context, friends[index])),
+                  title: Text(friends[index].nom,
+                      style: Theme.of(context).textTheme.title),
+                  leading: CircleAvatar(
+                    backgroundImage:
+                        AssetImage('images/${friends[index].imageProfil}'),
+                  ),
                 ),
               ),
-            ),
-          );
+            );
           }),
     );
   }
