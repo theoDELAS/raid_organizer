@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:raid_organizer/widget/HomeController.dart';
-import 'widget/HomeController.dart';
+import 'package:raid_organizer/widget/InscriptionController.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
           })),
-      home: HomeController(title: 'Raid Organizer'),
+      home: InscriptionController(),
     );
   }
 }

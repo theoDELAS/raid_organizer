@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raid_organizer/widget/FriendsController.dart';
 
 Widget appbar(BuildContext buildContext) {
   String title = 'RAID ORGANIZER';
@@ -27,7 +28,10 @@ Widget appbar(BuildContext buildContext) {
           color: Color.fromRGBO(2, 196, 131, 1),
         ),
         onPressed: () {
-          // do something
+          Navigator.push(buildContext,
+              MaterialPageRoute(builder: (BuildContext buildContext) {
+            return FriendsList();
+          }));
         },
       ),
     ],

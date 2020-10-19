@@ -34,12 +34,12 @@ class _FriendsListState extends State<FriendsList> {
           child: Column(
             children: <Widget>[
               Text(
-                friends.nom,
-                style: localTheme.textTheme.display1,
+                friends.nom.toUpperCase(),
+                style: TextStyle(fontFamily: 'Jost'),
               ),
               SizedBox(height: 20.0),
               Text(
-                'Descritpion du jeu',
+                'Description du jeu',
                 style: localTheme.textTheme.bodyText1,
               ),
               SizedBox(height: 20.0),
@@ -59,9 +59,7 @@ class _FriendsListState extends State<FriendsList> {
                   RaisedButton(
                     color: Color.fromRGBO(2, 196, 131, 1),
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/FriendsList');
-                      // ignore: unnecessary_statements
-                      Navigator.of(context).pop;
+                      Navigator.pop(context);
                     },
                     child: Text('ANNULER'),
                   )
@@ -82,7 +80,10 @@ class _FriendsListState extends State<FriendsList> {
       /*Navbar*/
       appBar: AppBar(
         backgroundColor: Colors.blueGrey.shade700,
-        title: Text('Mes Amis'),
+        title: Text(
+          'Mes Amis'.toUpperCase(),
+          style: TextStyle(fontFamily: 'Jost'),
+        ),
         actions: <Widget>[
           Icon(
             Icons.search,
@@ -98,8 +99,9 @@ class _FriendsListState extends State<FriendsList> {
           itemCount: friends.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+              padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
               child: Card(
+                elevation: 0,
                 color: Colors.blueGrey.shade700,
                 child: ListTile(
                   onTap: () => showDialog(
@@ -107,7 +109,8 @@ class _FriendsListState extends State<FriendsList> {
                       builder: (context) =>
                           _dialogBuilder(context, friends[index])),
                   title: Text(friends[index].nom,
-                      style: Theme.of(context).textTheme.title),
+                      style: TextStyle(
+                          fontFamily: 'Jost', fontWeight: FontWeight.bold)),
                   leading: CircleAvatar(
                     backgroundImage:
                         AssetImage('images/${friends[index].imageProfil}'),
