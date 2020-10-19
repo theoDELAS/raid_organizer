@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:raid_organizer/widget/HomeController.dart';
 
 class EventFriendCard extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _EventFriendCardState extends State<EventFriendCard> {
       actionExtentRatio: 0.25,
       child: Container(
           decoration: BoxDecoration(
-            color: Color.fromRGBO(0, 0, 0, 22),
+            color: Colors.blueGrey[700],
             borderRadius: BorderRadius.all(
               Radius.circular(0),
             ),
@@ -23,6 +24,11 @@ class _EventFriendCardState extends State<EventFriendCard> {
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  width: 5,
+                  height: 110,
+                ),
                 Container(
                   height: 50,
                   margin: EdgeInsets.only(right: 15),
@@ -107,9 +113,15 @@ class _EventFriendCardState extends State<EventFriendCard> {
       ),
       actions: <Widget>[
         IconSlideAction(
-          caption: 'Archive',
+          caption: 'Voir',
           color: Colors.blue,
-          icon: Icons.archive,
+          icon: Icons.remove_red_eye,
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext buildContext) {
+                    return HomeController();
+                  }));
+            }
         ),
       ],
     );
