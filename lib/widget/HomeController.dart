@@ -41,7 +41,7 @@ class _HomeControllerState extends State<HomeController> {
     return Scaffold(
         backgroundColor: Colors.blueGrey.shade700,
         appBar: appbar(context),
-        body: SafeArea(
+        body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               FlatButton(
@@ -121,6 +121,7 @@ class _HomeControllerState extends State<HomeController> {
                   style: TextStyle(color: Colors.white, fontSize: 22, fontFamily: 'Jost'),
                 ),
               ),
+              EventFriendCard(),
               EventFriendCard(),
             ],
           ),

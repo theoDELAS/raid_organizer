@@ -22,7 +22,6 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    inspect(games);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       child: CarouselSlider(
