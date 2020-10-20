@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:raid_organizer/widget/HomeController.dart';
 
 class ConnexionController extends StatelessWidget {
-  String email = '';
+  String username = '';
   String password = '';
 
   final _keyForm = GlobalKey<FormState>();
@@ -26,10 +26,10 @@ class ConnexionController extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
-                      labelText: 'E-mail', border: OutlineInputBorder()),
+                      labelText: "Nom d'utilisateur", border: OutlineInputBorder()),
                   validator: (val) =>
                   val.isEmpty ? 'Veuillez saisir votre e-mail' : null,
-                  onChanged: (val) => email = val,
+                  onChanged: (val) => username = val,
                 ),
                 SizedBox(height: 30.0),
                 TextFormField(
