@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raid_organizer/widget/ConnexionController.dart';
 import 'package:raid_organizer/widget/HomeController.dart';
 
 class InscriptionController extends StatelessWidget {
@@ -71,6 +72,28 @@ class InscriptionController extends StatelessWidget {
                   child: Text("S'INSCRIRE",
                       style: TextStyle(color: Colors.white, fontSize: 15.0)),
                 ),
+                SizedBox(height: 30.0),
+                Text(
+                  'Déjà un compte?',
+                   style: TextStyle(color: Colors.white, fontSize: 15.0)
+                ),
+                SizedBox(height: 10.0),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  color: Color.fromRGBO(2, 196, 131, 1),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext buildContext) {
+                      return ConnexionController();
+                    }));
+                  },
+                  child: Text(
+                      'Connexion'.toUpperCase(),
+                      style: TextStyle(color: Colors.white, fontSize: 15.0)
+                  ),
+                )
               ],
             ),
           ),
