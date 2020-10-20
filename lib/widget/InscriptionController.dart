@@ -3,7 +3,7 @@ import 'package:raid_organizer/widget/ConnexionController.dart';
 import 'package:raid_organizer/widget/HomeController.dart';
 
 class InscriptionController extends StatelessWidget {
-  String email = '';
+  String username = '';
   String password = '';
   String confPassword = '';
 
@@ -28,10 +28,10 @@ class InscriptionController extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
-                      labelText: 'E-mail', border: OutlineInputBorder()),
+                      labelText: "Nom d'utilisateur", border: OutlineInputBorder()),
                   validator: (val) =>
-                      val.isEmpty ? 'Saisissez votre email' : null,
-                  onChanged: (val) => email = val,
+                      val.isEmpty ? "Saisissez votre nom d'utilisateur" : null,
+                  onChanged: (val) => username = val,
                 ),
                 SizedBox(height: 30.0),
                 TextFormField(
