@@ -82,8 +82,10 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
       FOREIGN KEY (game_id) REFERENCES Game (id)
     )
     ''');
-    //     user_id INT NULL,
-    // FOREIGN KEY (user_id) REFERENCES User (id),
+    // Insertion de valeurs
+    await db.rawInsert('''
+    INSERT INTO Event (game, date, description, slots, is_private) VALUES ("Donjon Piou", "admin@app.io", "https://backtowork.ch/wp-content/uploads/2020/05/user3.png", "admin")
+    ''');
   }
 
   // CREATE
