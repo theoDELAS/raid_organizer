@@ -6,6 +6,7 @@ class InscriptionController extends StatelessWidget {
   String username = '';
   String password = '';
   String confPassword = '';
+  String mail = '';
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -28,10 +29,19 @@ class InscriptionController extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
-                      labelText: "Nom d'utilisateur", border: OutlineInputBorder()),
+                      labelText: "Nom d'utilisateur",
+                      border: OutlineInputBorder()),
                   validator: (val) =>
                       val.isEmpty ? "Saisissez votre nom d'utilisateur" : null,
                   onChanged: (val) => username = val,
+                ),
+                SizedBox(height: 30.0),
+                TextFormField(
+                  decoration: InputDecoration(
+                      labelText: "Adresse mail", border: OutlineInputBorder()),
+                  validator: (val) =>
+                      val.isEmpty ? "Saisissez votre adresse mail" : null,
+                  onChanged: (val) => mail = val,
                 ),
                 SizedBox(height: 30.0),
                 TextFormField(
@@ -63,20 +73,37 @@ class InscriptionController extends StatelessWidget {
                   onPressed: () {
                     if (_keyForm.currentState.validate()) {
                       /*Changer la route vers la HomeController (err)*/
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (BuildContext buildContext) {
-                        return HomeController();
-                      }));
+                      // Ajouter à la base de données
+                      if (username != null) {
+                        Map<String, dynamic> map = {'username': username};
+                        if (mail != null) {
+                          map['mail'] = mail;
+                        }
+                        if (password == confPassword) {
+                          map['password'] = password;
+                        }
+                        // Game game = new Game();
+                        // game.fromMap(map);
+                        // DatabaseClient().upsertGame(game).then((value) {
+                        //   name = null;
+                        //   image = null;
+                        //   description = null;
+                        //   Navigator.pop(context);
+                        // });
+                        print(password);
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (BuildContext buildContext) {
+                          return HomeController();
+                        }));
+                      }
                     }
                   },
                   child: Text("S'INSCRIRE",
                       style: TextStyle(color: Colors.white, fontSize: 15.0)),
                 ),
                 SizedBox(height: 30.0),
-                Text(
-                  'Déjà un compte?',
-                   style: TextStyle(color: Colors.white, fontSize: 15.0)
-                ),
+                Text('Déjà un compte?',
+                    style: TextStyle(color: Colors.white, fontSize: 15.0)),
                 SizedBox(height: 10.0),
                 RaisedButton(
                   shape: RoundedRectangleBorder(
@@ -84,15 +111,13 @@ class InscriptionController extends StatelessWidget {
                   ),
                   color: Color.fromRGBO(2, 196, 131, 1),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (BuildContext buildContext) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (BuildContext buildContext) {
                       return ConnexionController();
                     }));
                   },
-                  child: Text(
-                      'Connexion'.toUpperCase(),
-                      style: TextStyle(color: Colors.white, fontSize: 15.0)
-                  ),
+                  child: Text('Connexion'.toUpperCase(),
+                      style: TextStyle(color: Colors.white, fontSize: 15.0)),
                 )
               ],
             ),
