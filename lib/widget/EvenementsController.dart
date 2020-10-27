@@ -189,6 +189,9 @@ class _EvenementsControllerState extends State<EvenementsController> {
                               ),
                               onPressed: () {
                                 DatePicker.showDateTimePicker(context,
+                                    theme: DatePickerTheme(
+                                        headerColor: Colors.green,
+                                        backgroundColor: Colors.grey[800]),
                                     showTitleActions: true,
                                     minTime: DateTime.now(),
                                     maxTime: DateTime(2020, 12, 31),
@@ -313,8 +316,6 @@ class _EvenementsControllerState extends State<EvenementsController> {
       });
     }
   }
-
-  Future<Null> add(Evenement evenement) {}
 
   TextField myTextField(TypeTextField type, String label) {
     return TextField(
