@@ -21,7 +21,7 @@ class _ConnexionControllerState extends State<ConnexionController> {
         this.users = users;
       });
     });
-  } 
+  }
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _ConnexionControllerState extends State<ConnexionController> {
                       labelText: "Nom d'utilisateur",
                       border: OutlineInputBorder()),
                   validator: (val) =>
-                  val.isEmpty ? 'Veuillez saisir votre e-mail' : null,
+                      val.isEmpty ? 'Veuillez saisir votre e-mail' : null,
                   onChanged: (val) => username = val,
                 ),
                 SizedBox(height: 30.0),
@@ -73,15 +73,22 @@ class _ConnexionControllerState extends State<ConnexionController> {
                   ),
                   color: Color.fromRGBO(2, 196, 131, 1),
                   onPressed: () {
-                    print(users);
-                    // if (_keyForm.currentState.validate()) {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (BuildContext buildContext) {
-                    //       return HomeController();
-                    //     }),
-                    //   );
-                    // }
+                    if (_keyForm.currentState.validate()) {
+                      print(users.map((e) {
+                        e.username;
+                        if (username == e.username) {
+                          if (password == e.password) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext buildContext) {
+                                return HomeController();
+                              }),
+                            );
+                          }
+                        }
+                      }));
+                    }
                   },
                   child: Text("Connexion".toUpperCase(),
                       style: TextStyle(color: Colors.white, fontSize: 15.0)),
@@ -94,4 +101,3 @@ class _ConnexionControllerState extends State<ConnexionController> {
     );
   }
 }
-
