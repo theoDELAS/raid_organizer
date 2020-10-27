@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:raid_organizer/widget/ConnexionController.dart';
 import 'package:raid_organizer/widget/HomeController.dart';
 
-class InscriptionController extends StatelessWidget {
+class InscriptionController extends StatefulWidget {
+  @override
+  _InscriptionControllerState createState() => _InscriptionControllerState();
+}
+
+class _InscriptionControllerState extends State<InscriptionController> {
   String username = '';
   String password = '';
   String confPassword = '';
