@@ -96,6 +96,13 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
     return game;
   }
 
+  // Fonction d'ajout des données dans Game
+  Future<User> addUser(User user) async {
+    Database myDatabase = await database;
+    user.id = await myDatabase.insert('game', user.toMap());
+    return user;
+  }
+
   // Fonction d'ajout des données dans Event
   Future<Evenement> addEvent(Evenement evenement) async {
     Database myDatabase = await database;
