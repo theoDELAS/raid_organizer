@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:raid_organizer/model/user.dart';
+import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/widget/HomeController.dart';
+import 'package:raid_organizer/model/database.dart';
 
-class ConnexionController extends StatelessWidget {
+class ConnexionController extends StatefulWidget {
+  @override
+  _ConnexionControllerState createState() => _ConnexionControllerState();
+}
+
+class _ConnexionControllerState extends State<ConnexionController> {
   String username = '';
   String password = '';
+
+  List<User> users;
+
+  void getUsers() {
+    DatabaseClient().showUsers().then((users) {
+      setState(() {
+        this.users = users;
+      });
+    });
+  } 
+
+  @override
+  void initState() {
+    super.initState();
+    getUsers();
+  }
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -26,7 +50,8 @@ class ConnexionController extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(
-                      labelText: "Nom d'utilisateur", border: OutlineInputBorder()),
+                      labelText: "Nom d'utilisateur",
+                      border: OutlineInputBorder()),
                   validator: (val) =>
                   val.isEmpty ? 'Veuillez saisir votre e-mail' : null,
                   onChanged: (val) => username = val,
@@ -48,12 +73,15 @@ class ConnexionController extends StatelessWidget {
                   ),
                   color: Color.fromRGBO(2, 196, 131, 1),
                   onPressed: () {
-                    if (_keyForm.currentState.validate()) {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (BuildContext buildContext) {
-                            return HomeController();
-                          }));
-                    }
+                    print(users);
+                    // if (_keyForm.currentState.validate()) {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (BuildContext buildContext) {
+                    //       return HomeController();
+                    //     }),
+                    //   );
+                    // }
                   },
                   child: Text("Connexion".toUpperCase(),
                       style: TextStyle(color: Colors.white, fontSize: 15.0)),
@@ -66,3 +94,4 @@ class ConnexionController extends StatelessWidget {
     );
   }
 }
+
