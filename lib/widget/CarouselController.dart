@@ -36,6 +36,7 @@ class _CarouselState extends State<Carousel> {
           scrollDirection: Axis.horizontal,
         ),
         items: games.map((game) {
+          print(game.name);
           return Builder(
             builder: (BuildContext context) {
               return GestureDetector(
