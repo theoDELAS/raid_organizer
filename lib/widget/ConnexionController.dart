@@ -74,8 +74,8 @@ class _ConnexionControllerState extends State<ConnexionController> {
                   color: Color.fromRGBO(2, 196, 131, 1),
                   onPressed: () {
                     if (_keyForm.currentState.validate()) {
+                      print(users.map((e) => e.username));
                       print(users.map((e) {
-                        e.username;
                         if (username == e.username) {
                           if (password == e.password) {
                             Navigator.push(
