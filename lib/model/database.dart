@@ -70,22 +70,32 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
     INSERT INTO User (username, mail, image, password) VALUES ("administrator", "admin@app.io", "https://backtowork.ch/wp-content/uploads/2020/05/user3.png", "password")
     ''');
     // Table Event
+    // await db.execute('''
+    // CREATE TABLE Event(
+    //   id INTEGER PRIMARY KEY,
+    //   game_id INT NULL,
+    //   title TEXT NULL,
+    //   date DATETIME NULL,
+    //   description TEXT NULL,
+    //   slots INT NULL,
+    //   is_private BOOLEAN NULL,
+    //   FOREIGN KEY (game_id) REFERENCES Game (id)
+    // )
+    // ''');
     await db.execute('''
     CREATE TABLE Event(
       id INTEGER PRIMARY KEY,
-      game_id INT NULL,
       title TEXT NULL,
       date DATETIME NULL,
       description TEXT NULL,
       slots INT NULL,
-      is_private BOOLEAN NULL,
-      FOREIGN KEY (game_id) REFERENCES Game (id)
+      is_private BOOL NULL
     )
     ''');
     // Insertion de valeurs
-    await db.rawInsert('''
-    INSERT INTO Event (game, date, description, slots, is_private) VALUES ("Donjon Piou", "admin@app.io", "https://backtowork.ch/wp-content/uploads/2020/05/user3.png", "admin")
-    ''');
+    // await db.rawInsert('''
+    // INSERT INTO Event (game, date, description, slots, is_private) VALUES ("Donjon Piou", "admin@app.io", "https://backtowork.ch/wp-content/uploads/2020/05/user3.png", "admin")
+    // ''');
   }
 
   // CREATE
@@ -173,5 +183,18 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
       users.add(user);
     });
     return users;
+  }
+
+  Future<List<Evenement>> showEvents() async {
+    Database myDatabase = await database;
+    List<Map<String, dynamic>> result =
+        await myDatabase.rawQuery("SELECT * FROM event");
+    List<Evenement> events = [];
+    result.forEach((map) {
+      Evenement event = new Evenement();
+      event.fromMap(map);
+      events.add(event);
+    });
+    return events;
   }
 }
