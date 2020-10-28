@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:raid_organizer/model/user.dart';
 import 'package:raid_organizer/widget/ConnexionController.dart';
 import 'package:raid_organizer/widget/HomeController.dart';
+import 'package:raid_organizer/model/database.dart';
 
 class InscriptionController extends StatefulWidget {
   @override
@@ -12,6 +14,22 @@ class _InscriptionControllerState extends State<InscriptionController> {
   String password = '';
   String confPassword = '';
   String mail = '';
+
+  List<User> users;
+
+  void getUsers() {
+    DatabaseClient().showUsers().then((users) {
+      setState(() {
+        this.users = users;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUsers();
+  }
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -95,11 +113,19 @@ class _InscriptionControllerState extends State<InscriptionController> {
                         //   description = null;
                         //   Navigator.pop(context);
                         // });
+                        print(users.map((e) => e.username));
                         print(password);
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (BuildContext buildContext) {
-                          return HomeController();
-                        }));
+                        User user = new User();
+                        user.fromMap(map);
+                        DatabaseClient().addUser(user).then((value) {
+                          username = null;
+                          mail = null;
+                          password = null;
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (BuildContext buildContext) {
+                            return HomeController();
+                          }));
+                        });
                       }
                     }
                   },
