@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter/services.dart';
 import 'package:raid_organizer/model/event.dart';
 import 'package:raid_organizer/model/game.dart';
@@ -34,7 +35,7 @@ class _EvenementsControllerState extends State<EvenementsController> {
   @override
   void initState() {
     super.initState();
-    is_private = false;
+    // is_private = false;
     getEvents();
   }
 
@@ -55,18 +56,18 @@ class _EvenementsControllerState extends State<EvenementsController> {
   String description;
   num slots;
   DateTime date;
-  TimeOfDay hour;
-  bool is_private = false;
+  // bool is_private = false;
 
   @override
   Widget build(BuildContext context) {
-    print(evenements.map((e) => e.title));
+    // print(evenements.map((e) => e.slots));
     return Scaffold(
         resizeToAvoidBottomPadding: true,
         backgroundColor: Colors.blueGrey.shade700,
         appBar: appbar(context),
-        body: Center(
-            child: Column(
+        body: SingleChildScrollView(
+            child: Center(
+                child: Column(
           children: <Widget>[
             SizedBox(height: 30),
             FlatButton(
@@ -100,12 +101,118 @@ class _EvenementsControllerState extends State<EvenementsController> {
                 style: TextStyle(fontSize: 20, fontFamily: 'Jost')),
             SizedBox(height: 10),
             for (var event in evenements)
-              GestureDetector(
+              Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: 0.25,
                 child: Container(
-                    width: 370,
-                    height: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  height: MediaQuery.of(context).size.height * 0.13,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3))
+                    ],
+                    image: DecorationImage(
+                      image: NetworkImage(widget.game.image),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.4), BlendMode.dstATop),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        color: Colors.white,
+                        width: 5,
+                        height: 110,
+                      ),
+                      Container(
+                        height: 50,
+                        margin: EdgeInsets.only(right: 15),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            right: BorderSide(
+                                color: Colors.white,
+                                width: 1,
+                                style: BorderStyle.solid),
+                          ),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.only(right: 5),
+                          child: Icon(
+                            Icons.keyboard_arrow_right,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                                margin: const EdgeInsets.only(top: 10),
+                                child: Text(
+                                  "Username",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Jost',
+                                    fontSize: 16,
+                                  ),
+                                )),
+                            SizedBox(height: 40),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 24.0,
+                                ),
+                                Text(
+                                  "0/" + event.slots,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Jost',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 8,
+                        child: Column(
+                          children: [
+                            Container(
+                                margin:
+                                    const EdgeInsets.only(left: 150, top: 75),
+                                child: Text(
+                                  "Début : 20h15",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Jost',
+                                    fontSize: 15,
+                                  ),
+                                ))
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  Container(
+                      height: MediaQuery.of(context).size.height * 0.13,
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
                               color: Colors.black.withOpacity(0.5),
@@ -113,19 +220,19 @@ class _EvenementsControllerState extends State<EvenementsController> {
                               blurRadius: 7,
                               offset: Offset(0, 3))
                         ],
-                        image: DecorationImage(
-                          image: NetworkImage(widget.game.image),
-                          fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.4), BlendMode.dstATop),
-                        )),
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10, top: 10),
-                        child: Text(event.title.toUpperCase(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Jost',
-                                fontSize: 20)))),
+                      ),
+                      child: IconSlideAction(
+                          caption: 'Rejoindre',
+                          color: Color.fromRGBO(1, 191, 136, 1),
+                          icon: Icons.control_point_duplicate_rounded,
+                          foregroundColor: Colors.white,
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (BuildContext buildContext) {
+                              return HomeController();
+                            }));
+                          }))
+                ],
               ),
             SizedBox(height: 40),
             Text(
@@ -133,254 +240,6 @@ class _EvenementsControllerState extends State<EvenementsController> {
               style: TextStyle(fontSize: 20, fontFamily: 'Jost'),
             ),
           ],
-        )));
+        ))));
   }
-
-  List<Widget> getList() {
-    List<Widget> childs = [];
-
-    return childs;
-  }
-  // Future<Null> create(Evenement evenement) async {
-  //   await showDialog(
-  //       context: context,
-  //       builder: (BuildContext buildContext) {
-  //         return Scaffold(
-  //             backgroundColor: Colors.blueGrey.shade700,
-  //             appBar: appbar(context),
-  //             body: SingleChildScrollView(
-  //               child: Center(
-  //                   child: Column(
-  //                 children: [
-  //                   SizedBox(height: 30),
-  //                   Text(
-  //                     "Création de votre évènement".toUpperCase(),
-  //                     style: TextStyle(
-  //                         fontSize: 25,
-  //                         fontFamily: 'Jost',
-  //                         color: Colors.white),
-  //                   ),
-  //                   SizedBox(height: 25),
-  //                   Card(
-  //                       color: Colors.blueGrey.shade700,
-  //                       elevation: 0,
-  //                       child: Column(
-  //                         children: [
-  //                           myTextField(
-  //                               TypeTextField.title, "Titre de l'évènement"),
-  //                           Row(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                             children: [
-  //                               Text(
-  //                                 "Évènement privé",
-  //                                 style: TextStyle(
-  //                                     fontFamily: 'Jost',
-  //                                     color: Colors.white,
-  //                                     fontSize: 20,
-  //                                     fontStyle: FontStyle.italic),
-  //                               ),
-  //                               Switch(
-  //                                 activeColor: Color.fromRGBO(2, 196, 131, 1),
-  //                                 inactiveThumbColor: Colors.red[700],
-  //                                 value: is_private,
-  //                                 onChanged: (bool value) {
-  //                                   setState(() {
-  //                                     is_private = value;
-  //                                     print(is_private);
-  //                                   });
-  //                                 },
-  //                               )
-  //                             ],
-  //                           ),
-  //                           SizedBox(height: 20),
-  //                           // Text(
-  //                           //   "Date et heure de l'évènement".toUpperCase(),
-  //                           //   style: TextStyle(
-  //                           //     fontSize: 20,
-  //                           //     fontFamily: 'Jost',
-  //                           //     color: Colors.white,
-  //                           //   ),
-  //                           // ),
-  //                           // SizedBox(height: 10),
-  //                           // Row(
-  //                           //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //                           //   children: [
-  //                           FlatButton(
-  //                             color: Colors.black54,
-  //                             child: Text(
-  //                               (date == null)
-  //                                   ? "Date et heure de l'évènement"
-  //                                       .toUpperCase()
-  //                                   : date,
-  //                               style: TextStyle(
-  //                                   color: Colors.white, fontFamily: 'Jost'),
-  //                             ),
-  //                             onPressed: () {
-  //                               DatePicker.showDateTimePicker(context,
-  //                                   theme: DatePickerTheme(
-  //                                       headerColor: Colors.green,
-  //                                       backgroundColor: Colors.grey[800]),
-  //                                   showTitleActions: true,
-  //                                   minTime: DateTime.now(),
-  //                                   maxTime: DateTime(2020, 12, 31),
-  //                                   onChanged: (date) {
-  //                                 print('change $date');
-  //                               }, onConfirm: (date) {
-  //                                 print('confirm $date');
-  //                               },
-  //                                   currentTime: DateTime.now(),
-  //                                   locale: LocaleType.fr);
-  //                             },
-  //                           ),
-  //                           //   ],
-  //                           // ),
-  //                           SizedBox(height: 20),
-  //                           myTextField(TypeTextField.description,
-  //                               "Description de l'évènement"),
-  //                           SizedBox(height: 20),
-  //                           Text(
-  //                             "Nombre de participants".toUpperCase(),
-  //                             style: TextStyle(
-  //                                 fontFamily: 'Jost', color: Colors.white),
-  //                           ),
-  //                           SizedBox(height: 5),
-  //                           Container(
-  //                             width: 120,
-  //                             child: TextFormField(
-  //                                 validator: (val) {
-  //                                   final supportValue = int.tryParse(val);
-  //                                   return supportValue >= 2 &&
-  //                                           supportValue <= 5
-  //                                       ? "Le nombre de participants doit être entre 2 et 5"
-  //                                       : null;
-  //                                 },
-  //                                 decoration: InputDecoration(
-  //                                     labelText: "(Entre 2 et 5)",
-  //                                     labelStyle: TextStyle(
-  //                                       fontFamily: 'Jost',
-  //                                       color: Color.fromRGBO(2, 196, 131, 1),
-  //                                     ),
-  //                                     focusedBorder: OutlineInputBorder(
-  //                                         borderSide: BorderSide(
-  //                                             color: Color.fromRGBO(
-  //                                                 2, 196, 131, 1))),
-  //                                     border: OutlineInputBorder(
-  //                                         borderSide: BorderSide(
-  //                                             color: Colors.transparent))),
-  //                                 keyboardType: TextInputType.number,
-  //                                 inputFormatters: <TextInputFormatter>[
-  //                                   FilteringTextInputFormatter.digitsOnly
-  //                                 ]),
-  //                           ),
-  //                           SizedBox(height: 30),
-  //                           FlatButton(
-  //                               shape: RoundedRectangleBorder(
-  //                                   borderRadius: BorderRadius.circular(8)),
-  //                               color: Color.fromRGBO(1, 196, 131, 1),
-  //                               padding: EdgeInsets.all(7),
-  //                               onPressed: () {
-  //                                 Provider.of(context, listen: false);
-  //                                 // Ajouter à la base de données
-  //                                 if (title != null) {
-  //                                   Map<String, Object> map = {'title': title};
-  //                                   if (image != null) {
-  //                                     map['image'] = image;
-  //                                   }
-  //                                   if (description != null) {
-  //                                     map['description'] = description;
-  //                                   }
-  //                                   if (game != null) {
-  //                                     map['game_id'] = game.id;
-  //                                   }
-  //                                   Evenement evenement = new Evenement();
-  //                                   print(evenement);
-  //                                   evenement.fromMap(map);
-  //                                   print(evenement);
-  //                                   DatabaseClient()
-  //                                       .upsertEvenement(evenement)
-  //                                       .then((value) {
-  //                                     game.id = null;
-  //                                     title = null;
-  //                                     image = null;
-  //                                     description = null;
-  //                                   });
-  //                                   print(evenement);
-  //                                 }
-  //                               },
-  //                               child: Text(
-  //                                 "Créer l'évènement !".toUpperCase(),
-  //                                 style: TextStyle(
-  //                                     color: Colors.white,
-  //                                     fontFamily: 'Jost',
-  //                                     fontSize: 20),
-  //                               )),
-  //                         ],
-  //                       ))
-  //                 ],
-  //               )),
-  //             ));
-  //       });
-  // }
-
-  // Future<Null> showDate() async {
-  //   DateTime choice = await showDatePicker(
-  //       context: context,
-  //       initialDate: DateTime.now(),
-  //       firstDate: DateTime(1999),
-  //       lastDate: DateTime(2021));
-  //   if (choice != null) {
-  //     setState(() {
-  //       date = choice;
-  //     });
-  //   }
-  // }
-
-  // Future<Null> showHour() async {
-  //   TimeOfDay choice =
-  //       await showTimePicker(context: context, initialTime: TimeOfDay.now());
-  //   if (choice != null) {
-  //     setState(() {
-  //       hour = choice;
-  //     });
-  //   }
-  // }
-
-  // TextField myTextField(TypeTextField type, String label) {
-  //   return TextField(
-  //     decoration: InputDecoration(
-  //         labelStyle: TextStyle(
-  //             fontFamily: 'Jost', color: Color.fromRGBO(2, 196, 131, 1)),
-  //         fillColor: Colors.blueGrey.shade700,
-  //         filled: true,
-  //         labelText: label,
-  //         focusedBorder: OutlineInputBorder(
-  //             borderSide: BorderSide(color: Color.fromRGBO(2, 196, 131, 1))),
-  //         border: OutlineInputBorder(
-  //             borderSide: BorderSide(color: Colors.transparent))),
-  //     onChanged: (String string) {
-  //       switch (type) {
-  //         case TypeTextField.title:
-  //           title = string;
-  //           break;
-  //         case TypeTextField.date:
-  //           //
-  //           break;
-  //         case TypeTextField.description:
-  //           description = string;
-  //           break;
-  //         case TypeTextField.slots:
-  //           // slots = string;
-  //           break;
-  //         case TypeTextField.is_private:
-  //           // TODO: Handle this case.
-  //           break;
-  //         case TypeTextField.hour:
-  //           //
-  //           break;
-  //       }
-  //     },
-  //   );
-  // }
 }
-
-enum TypeTextField { title, date, hour, description, slots, is_private }
