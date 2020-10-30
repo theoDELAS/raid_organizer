@@ -53,6 +53,14 @@ class _InscriptionControllerState extends State<InscriptionController> {
                 TextFormField(
                   decoration: InputDecoration(
                       labelText: "Nom d'utilisateur",
+                      labelStyle: TextStyle(
+                          fontFamily: 'Jost',
+                          color: Color.fromRGBO(2, 196, 131, 1)),
+                      fillColor: Colors.blueGrey.shade700,
+                      filled: true,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(2, 196, 131, 1))),
                       border: OutlineInputBorder()),
                   validator: (val) =>
                       val.isEmpty ? "Saisissez votre nom d'utilisateur" : null,
@@ -61,7 +69,17 @@ class _InscriptionControllerState extends State<InscriptionController> {
                 SizedBox(height: 30.0),
                 TextFormField(
                   decoration: InputDecoration(
-                      labelText: "Adresse mail", border: OutlineInputBorder()),
+                    labelText: "Adresse mail",
+                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                        fontFamily: 'Jost',
+                        color: Color.fromRGBO(2, 196, 131, 1)),
+                    fillColor: Colors.blueGrey.shade700,
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color.fromRGBO(2, 196, 131, 1))),
+                  ),
                   validator: (val) =>
                       val.isEmpty ? "Saisissez votre adresse mail" : null,
                   onChanged: (val) => mail = val,
@@ -69,7 +87,17 @@ class _InscriptionControllerState extends State<InscriptionController> {
                 SizedBox(height: 30.0),
                 TextFormField(
                   decoration: InputDecoration(
-                      labelText: 'Mot de passe', border: OutlineInputBorder()),
+                    labelText: 'Mot de passe',
+                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                        fontFamily: 'Jost',
+                        color: Color.fromRGBO(2, 196, 131, 1)),
+                    fillColor: Colors.blueGrey.shade700,
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color.fromRGBO(2, 196, 131, 1))),
+                  ),
                   obscureText: true,
                   onChanged: (val) => password = val,
                   validator: (val) => val.length < 6
@@ -79,8 +107,17 @@ class _InscriptionControllerState extends State<InscriptionController> {
                 SizedBox(height: 30.0),
                 TextFormField(
                   decoration: InputDecoration(
-                      labelText: 'Confirmez le mot de passe',
-                      border: OutlineInputBorder()),
+                    labelText: 'Confirmez le mot de passe',
+                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(
+                        fontFamily: 'Jost',
+                        color: Color.fromRGBO(2, 196, 131, 1)),
+                    fillColor: Colors.blueGrey.shade700,
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color.fromRGBO(2, 196, 131, 1))),
+                  ),
                   onChanged: (val) => confPassword = val,
                   validator: (val) => confPassword != password
                       ? 'Confirmez votre mot de passe'
