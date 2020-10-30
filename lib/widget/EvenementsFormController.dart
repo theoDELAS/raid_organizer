@@ -28,12 +28,12 @@ class EvenementsFormController extends StatefulWidget {
 }
 
 class _EvenementsFormControllerState extends State<EvenementsFormController> {
-  // get game => this.game;
+  // get game => game;
 
   @override
   void initState() {
     super.initState();
-    is_private = false;
+    // is_private = false;
   }
 
   String newList;
@@ -42,10 +42,9 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
   String title;
   String image;
   String description;
-  num slots;
+  String slots;
   DateTime date;
-  TimeOfDay hour;
-  bool is_private = false;
+  // bool is_private = false;
 
   @override
   Widget build(BuildContext context) {
@@ -83,12 +82,13 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                           Switch(
                             activeColor: Color.fromRGBO(2, 196, 131, 1),
                             inactiveThumbColor: Colors.red[700],
-                            value: is_private,
+                            value: false,
                             onChanged: (bool value) {
-                              setState(() {
-                                is_private = value;
-                                print(is_private);
-                              });
+                              value = false;
+                              // setState(() {
+                              //   is_private = value;
+                              //   print(is_private);
+                              // });
                             },
                           )
                         ],
@@ -98,16 +98,19 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                         color: Colors.black54,
                         onPressed: () {
                           DatePicker.showDateTimePicker(context,
-                              theme: DatePickerTheme(
-                                  headerColor: Colors.green,
-                                  backgroundColor: Colors.grey[800]),
+                              // theme: DatePickerTheme(
+                              //     headerColor: Colors.green,
+                              //     backgroundColor: Colors.grey[800]),
                               showTitleActions: true,
                               minTime: DateTime.now(),
                               maxTime: DateTime(2020, 12, 31),
-                              onChanged: (date) {
+                              onChanged: (DateTime date) {
                             print('change $date');
-                          }, onConfirm: (date) {
+                            date = date;
+                          }, onConfirm: (DateTime date) {
                             print('confirm $date');
+                            date = date;
+                            print("definitive $date");
                           },
                               currentTime: DateTime.now(),
                               locale: LocaleType.fr);
@@ -135,11 +138,16 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                       Container(
                         width: 120,
                         child: TextFormField(
-                            validator: (val) {
-                              final supportValue = int.tryParse(val);
-                              return supportValue >= 2 && supportValue <= 5
-                                  ? "Le nombre de participants doit être entre 2 et 5"
-                                  : val;
+                            // validator: (val) {
+                            //   final supportValue = int.tryParse(val);
+                            //   return supportValue >= 2 && supportValue <= 5
+                            //       ? "Le nombre de participants doit être entre 2 et 5"
+                            //       : val;
+                            // },
+                            onChanged: (val) {
+                              slots = val;
+                              print(slots);
+                              print(val);
                             },
                             decoration: InputDecoration(
                                 labelText: "(Entre 2 et 5)",
@@ -165,12 +173,13 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                           color: Color.fromRGBO(1, 196, 131, 1),
                           padding: EdgeInsets.all(7),
                           onPressed: () {
+                            print("final slots :$slots");
                             // Provider.of(context, listen: false);
                             // Ajouter à la base de données
                             if (title != null) {
                               Map<String, Object> map = {'title': title};
-                              // if (image != null) {
-                              //   map['image'] = image;
+                              // if (is_private != null) {
+                              //   map['is_private'] = is_private;
                               // }
                               if (date != null) {
                                 map['date'] = date;
@@ -189,11 +198,16 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                                   .addEvent(evenement)
                                   .then((value) {
                                 // game.id = null;
+                                print(
+                                    "slots after add : $evenement.slots, $slots");
                                 print(evenement.slots);
+                                print(slots);
 
                                 title = null;
                                 image = null;
                                 description = null;
+                                date = null;
+                                slots = null;
                                 Navigator.push(context, MaterialPageRoute(
                                     builder: (BuildContext buildContext) {
                                   return HomeController();
@@ -216,29 +230,6 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
         ));
   }
 
-  // Future<Null> showDate() async {
-  //   DateTime choice = await showDatePicker(
-  //       context: context,
-  //       initialDate: DateTime.now(),
-  //       firstDate: DateTime(1999),
-  //       lastDate: DateTime(2021));
-  //   if (choice != null) {
-  //     setState(() {
-  //       date = choice;
-  //     });
-  //   }
-  // }
-
-  // Future<Null> showHour() async {
-  //   TimeOfDay choice =
-  //       await showTimePicker(context: context, initialTime: TimeOfDay.now());
-  //   if (choice != null) {
-  //     setState(() {
-  //       hour = choice;
-  //     });
-  //   }
-  // }
-
   TextField myTextField(TypeTextField type, String label) {
     return TextField(
       decoration: InputDecoration(
@@ -257,19 +248,16 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
             title = string;
             break;
           case TypeTextField.date:
-            //
+            date = date;
             break;
           case TypeTextField.description:
             description = string;
             break;
           case TypeTextField.slots:
-            // slots = string;
+            slots = slots;
             break;
           case TypeTextField.is_private:
             // TODO: Handle this case.
-            break;
-          case TypeTextField.hour:
-            //
             break;
         }
       },
@@ -277,4 +265,4 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
   }
 }
 
-enum TypeTextField { title, date, hour, description, slots, is_private }
+enum TypeTextField { title, date, description, slots, is_private }
