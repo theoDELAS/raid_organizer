@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:raid_organizer/model/event.dart';
 import 'package:raid_organizer/model/game.dart';
+import 'package:raid_organizer/model/user.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
-class DatabaseClient {
+class DatabaseClient extends ChangeNotifier {
   Database _database;
 
   Future<Database> get database async {
@@ -65,19 +67,34 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
     ''');
     // Insertion de valeurs
     await db.rawInsert('''
-    INSERT INTO User (username, mail, image, password) VALUES ("administrator", "admin@app.io", "https://backtowork.ch/wp-content/uploads/2020/05/user3.png", "admin")
+    INSERT INTO User (username, mail, image, password) VALUES ("administrator", "admin@app.io", "https://backtowork.ch/wp-content/uploads/2020/05/user3.png", "password")
     ''');
     // Table Event
+    // await db.execute('''
+    // CREATE TABLE Event(
+    //   id INTEGER PRIMARY KEY,
+    //   game_id INT NULL,
+    //   title TEXT NULL,
+    //   date DATETIME NULL,
+    //   description TEXT NULL,
+    //   slots INT NULL,
+    //   is_private BOOLEAN NULL,
+    //   FOREIGN KEY (game_id) REFERENCES Game (id)
+    // )
+    // ''');
     await db.execute('''
     CREATE TABLE Event(
       id INTEGER PRIMARY KEY,
-      game TEXT NULL,
+      title TEXT NULL,
       date DATETIME NULL,
       description TEXT NULL,
-      slots INT NULL,
-      is_private BOOLEAN NULL,
+      slots VARCHAR(2) NULL
     )
     ''');
+    // Insertion de valeurs
+    // await db.rawInsert('''
+    // INSERT INTO Event (game, date, description, slots, is_private) VALUES ("Donjon Piou", "admin@app.io", "https://backtowork.ch/wp-content/uploads/2020/05/user3.png", "admin")
+    // ''');
   }
 
   // CREATE
@@ -86,6 +103,13 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
     Database myDatabase = await database;
     game.id = await myDatabase.insert('game', game.toMap());
     return game;
+  }
+
+  // Fonction d'ajout des données dans Game
+  Future<User> addUser(User user) async {
+    Database myDatabase = await database;
+    user.id = await myDatabase.insert('user', user.toMap());
+    return user;
   }
 
   // Fonction d'ajout des données dans Event
@@ -123,6 +147,7 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
       await myDatabase.update('event', evenement.toMap(),
           where: 'id = ?', whereArgs: [evenement.id]);
     }
+    notifyListeners();
     return evenement;
   }
 
@@ -144,5 +169,31 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
       games.add(game);
     });
     return games;
+  }
+
+  Future<List<User>> showUsers() async {
+    Database myDatabase = await database;
+    List<Map<String, dynamic>> result =
+        await myDatabase.rawQuery("SELECT * FROM user");
+    List<User> users = [];
+    result.forEach((map) {
+      User user = new User();
+      user.fromMap(map);
+      users.add(user);
+    });
+    return users;
+  }
+
+  Future<List<Evenement>> showEvents() async {
+    Database myDatabase = await database;
+    List<Map<String, dynamic>> result =
+        await myDatabase.rawQuery("SELECT * FROM event ORDER BY id DESC");
+    List<Evenement> events = [];
+    result.forEach((map) {
+      Evenement event = new Evenement();
+      event.fromMap(map);
+      events.add(event);
+    });
+    return events;
   }
 }

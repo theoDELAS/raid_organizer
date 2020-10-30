@@ -1,9 +1,11 @@
-class Evenement {
+import 'package:flutter/material.dart';
+
+class Evenement extends ChangeNotifier {
   int id;
   String title;
   String description;
   DateTime date;
-  int slots;
+  String slots;
   bool is_private;
   // int user;
 
@@ -13,7 +15,7 @@ class Evenement {
     this.date = map['date'];
     this.description = map['description'];
     this.slots = map['slots'];
-    this.is_private = map['is_private'];
+    // this.is_private = map['is_private'];
     // this.user = map['user'];
   }
 
@@ -23,7 +25,7 @@ class Evenement {
       'date': this.date,
       'description': this.description,
       'slots': this.slots,
-      'is_private': this.is_private,
+      // 'is_private': this.is_private,
       // 'user': this.user
     };
     if (id != null) {
