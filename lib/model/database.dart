@@ -88,8 +88,7 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
       title TEXT NULL,
       date DATETIME NULL,
       description TEXT NULL,
-      slots INT NULL,
-      is_private BOOL NULL
+      slots VARCHAR(2) NULL
     )
     ''');
     // Insertion de valeurs
@@ -188,7 +187,7 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
   Future<List<Evenement>> showEvents() async {
     Database myDatabase = await database;
     List<Map<String, dynamic>> result =
-        await myDatabase.rawQuery("SELECT * FROM event");
+        await myDatabase.rawQuery("SELECT * FROM event ORDER BY id DESC");
     List<Evenement> events = [];
     result.forEach((map) {
       Evenement event = new Evenement();
