@@ -85,6 +85,7 @@ La première extension du jeu, The Burning Crusade, est sortie le 16 janvier 200
     await db.execute('''
     CREATE TABLE Event(
       id INTEGER PRIMARY KEY,
+      game_id VARCHAR(2) NULL,
       title TEXT NULL,
       date DATETIME NULL,
       description TEXT NULL,
