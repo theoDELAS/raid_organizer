@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -18,9 +19,9 @@ class EvenementsFormController extends StatefulWidget {
   Evenement evenement;
   Game game;
 
-  // EvenementsFormController(Game game) {
-  //   this.game = game;
-  // }
+  EvenementsFormController(Game game) {
+    this.game = game;
+  }
 
   @override
   _EvenementsFormControllerState createState() =>
@@ -28,7 +29,7 @@ class EvenementsFormController extends StatefulWidget {
 }
 
 class _EvenementsFormControllerState extends State<EvenementsFormController> {
-  // get game => game;
+  get game => game;
 
   @override
   void initState() {
@@ -43,11 +44,13 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
   String image;
   String description;
   String slots;
+  String game_id;
   DateTime date;
-  // bool is_private = false;
+  bool is_private = false;
 
   @override
   Widget build(BuildContext context) {
+    print("1: $date");
     return Scaffold(
         backgroundColor: Colors.blueGrey.shade700,
         appBar: appbar(context),
@@ -85,10 +88,10 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                             value: false,
                             onChanged: (bool value) {
                               value = false;
-                              // setState(() {
-                              //   is_private = value;
-                              //   print(is_private);
-                              // });
+                              setState(() {
+                                is_private = value;
+                                print(is_private);
+                              });
                             },
                           )
                         ],
@@ -104,21 +107,22 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                               showTitleActions: true,
                               minTime: DateTime.now(),
                               maxTime: DateTime(2020, 12, 31),
-                              onChanged: (DateTime date) {
+                              onChanged: (DateTime mydate) {
                             print('change $date');
-                            date = date;
-                          }, onConfirm: (DateTime date) {
+                            date = mydate;
+                          }, onConfirm: (DateTime mydate) {
                             print('confirm $date');
-                            date = date;
+                            date = mydate;
                             print("definitive $date");
                           },
                               currentTime: DateTime.now(),
                               locale: LocaleType.fr);
+                          inspect("after def: $date");
                         },
                         child: Text(
                           (date == null)
                               ? "Date et heure de l'évènement".toUpperCase()
-                              : date.toString(),
+                              : date,
                           style: TextStyle(
                               color: Colors.white, fontFamily: 'Jost'),
                         ),
@@ -139,15 +143,13 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                         width: 120,
                         child: TextFormField(
                             // validator: (val) {
-                            //   final supportValue = int.tryParse(val);
+                            //   final supportValue = int.parse(val);
                             //   return supportValue >= 2 && supportValue <= 5
                             //       ? "Le nombre de participants doit être entre 2 et 5"
-                            //       : val;
+                            //       : val.toString();
                             // },
                             onChanged: (val) {
                               slots = val;
-                              print(slots);
-                              print(val);
                             },
                             decoration: InputDecoration(
                                 labelText: "(Entre 2 et 5)",
@@ -173,17 +175,22 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                           color: Color.fromRGBO(1, 196, 131, 1),
                           padding: EdgeInsets.all(7),
                           onPressed: () {
-                            print("final slots :$slots");
-                            // Provider.of(context, listen: false);
+                            print("onpress : $date");
                             // Ajouter à la base de données
                             if (title != null) {
                               Map<String, Object> map = {'title': title};
+                              if (widget.game.id != null) {
+                                map['game_id'] = widget.game.id.toString();
+                              }
                               // if (is_private != null) {
                               //   map['is_private'] = is_private;
                               // }
-                              if (date != null) {
-                                map['date'] = date;
-                              }
+                              // if (date != null) {
+                              //   print("before: $date");
+                              //   map['date'] = date;
+                              //   print(date.runtimeType);
+                              //   print("last: $date");
+                              // }
                               if (description != null) {
                                 map['description'] = description;
                               }
@@ -191,18 +198,11 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                                 map['slots'] = slots;
                               }
                               Evenement evenement = new Evenement();
-                              print(evenement.title);
                               evenement.fromMap(map);
-                              print(evenement.description);
+                              print(evenement.date.toString());
                               DatabaseClient()
                                   .addEvent(evenement)
                                   .then((value) {
-                                // game.id = null;
-                                print(
-                                    "slots after add : $evenement.slots, $slots");
-                                print(evenement.slots);
-                                print(slots);
-
                                 title = null;
                                 image = null;
                                 description = null;
@@ -210,10 +210,9 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                                 slots = null;
                                 Navigator.push(context, MaterialPageRoute(
                                     builder: (BuildContext buildContext) {
-                                  return HomeController();
+                                  return EvenementsController(widget.game);
                                 }));
                               });
-                              print(evenement.title);
                             }
                           },
                           child: Text(
