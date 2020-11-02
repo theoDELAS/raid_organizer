@@ -7,6 +7,7 @@ class Evenement extends ChangeNotifier {
   DateTime date;
   String slots;
   bool is_private;
+  String game_id;
   // int user;
 
   fromMap(Map<String, dynamic> map) {
@@ -15,6 +16,7 @@ class Evenement extends ChangeNotifier {
     this.date = map['date'];
     this.description = map['description'];
     this.slots = map['slots'];
+    this.game_id = map['game_id'];
     // this.is_private = map['is_private'];
     // this.user = map['user'];
   }
@@ -25,6 +27,7 @@ class Evenement extends ChangeNotifier {
       'date': this.date,
       'description': this.description,
       'slots': this.slots,
+      'game_id': this.game_id
       // 'is_private': this.is_private,
       // 'user': this.user
     };
