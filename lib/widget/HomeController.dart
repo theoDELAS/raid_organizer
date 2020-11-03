@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:raid_organizer/model/database.dart';
+import 'package:raid_organizer/model/event.dart';
 import 'dart:async';
 import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/widget/CarouselController.dart' as carousel;
@@ -12,11 +13,14 @@ import 'appBar.dart';
 class HomeController extends StatefulWidget {
   @override
   _HomeControllerState createState() => _HomeControllerState();
+  Game game;
 }
 
 class _HomeControllerState extends State<HomeController> {
   String newList;
   List<Game> games;
+  List<Evenement> events;
+  Game game;
 
   String name;
   String image;
@@ -28,6 +32,11 @@ class _HomeControllerState extends State<HomeController> {
     DatabaseClient().showGames().then((value) {
       setState(() {
         games = value;
+      });
+    });
+    DatabaseClient().showEvents().then((value) {
+      setState(() {
+        events = value;
       });
     });
   }
@@ -118,8 +127,10 @@ class _HomeControllerState extends State<HomeController> {
                       color: Colors.white, fontSize: 22, fontFamily: 'Jost'),
                 ),
               ),
-              EventFriendCard(),
-              EventFriendCard(),
+              if (events == null)
+                Text("NOPE")
+              else
+                for (var event in events) EventFriendCard(event),
             ],
           ),
         ));
@@ -200,6 +211,14 @@ class _HomeControllerState extends State<HomeController> {
     DatabaseClient().showGames().then((games) {
       setState(() {
         this.games = games;
+      });
+    });
+  }
+
+  void getEvents() {
+    DatabaseClient().showEvents().then((events) {
+      setState(() {
+        this.events = events;
       });
     });
   }
