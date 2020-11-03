@@ -36,6 +36,7 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
   void initState() {
     super.initState();
     // is_private = false;
+    date = null;
   }
 
   String newList;
@@ -113,7 +114,11 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                             date = mydate;
                           }, onConfirm: (DateTime mydate) {
                             print('confirm $date');
-                            date = mydate;
+                            setState(() {
+                              date = mydate;
+                              print(date);
+                            });
+
                             print("definitive $date");
                           },
                               currentTime: DateTime.now(),
