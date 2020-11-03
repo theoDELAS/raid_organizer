@@ -196,9 +196,9 @@ class _EvenementsControllerState extends State<EvenementsController> {
                             children: [
                               Container(
                                   margin:
-                                      const EdgeInsets.only(left: 150, top: 75),
+                                      const EdgeInsets.only(left: 100, top: 50),
                                   child: Text(
-                                    "Début : 20h15",
+                                    "Début : " + event.date,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Jost',

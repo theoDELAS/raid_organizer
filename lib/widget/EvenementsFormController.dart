@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:raid_organizer/model/event.dart';
 import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/model/database.dart';
@@ -122,7 +123,7 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                         child: Text(
                           (date == null)
                               ? "Date et heure de l'évènement".toUpperCase()
-                              : date,
+                              : DateFormat("dd-MM-yyy HH:mm:ss").format(date),
                           style: TextStyle(
                               color: Colors.white, fontFamily: 'Jost'),
                         ),
@@ -185,12 +186,12 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                               // if (is_private != null) {
                               //   map['is_private'] = is_private;
                               // }
-                              // if (date != null) {
-                              //   print("before: $date");
-                              //   map['date'] = date;
-                              //   print(date.runtimeType);
-                              //   print("last: $date");
-                              // }
+                              if (date != null) {
+                                print("before: $date");
+                                map['date'] = date.toIso8601String();
+                                print(date.runtimeType);
+                                print("last: $date");
+                              }
                               if (description != null) {
                                 map['description'] = description;
                               }
@@ -199,7 +200,7 @@ class _EvenementsFormControllerState extends State<EvenementsFormController> {
                               }
                               Evenement evenement = new Evenement();
                               evenement.fromMap(map);
-                              print(evenement.date.toString());
+                              print(evenement.date);
                               DatabaseClient()
                                   .addEvent(evenement)
                                   .then((value) {
