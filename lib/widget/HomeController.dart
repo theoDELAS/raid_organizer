@@ -10,10 +10,6 @@ import 'package:raid_organizer/widget/EventFriendCardController.dart';
 import 'appBar.dart';
 
 class HomeController extends StatefulWidget {
-  HomeController({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _HomeControllerState createState() => _HomeControllerState();
 }
@@ -118,7 +114,8 @@ class _HomeControllerState extends State<HomeController> {
                 margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                 child: Text(
                   'EVENTS AMIS',
-                  style: TextStyle(color: Colors.white, fontSize: 22, fontFamily: 'Jost'),
+                  style: TextStyle(
+                      color: Colors.white, fontSize: 22, fontFamily: 'Jost'),
                 ),
               ),
               EventFriendCard(),
