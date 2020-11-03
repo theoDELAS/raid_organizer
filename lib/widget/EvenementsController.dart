@@ -162,7 +162,7 @@ class _EvenementsControllerState extends State<EvenementsController> {
                               Container(
                                   margin: const EdgeInsets.only(top: 10),
                                   child: Text(
-                                    "Username",
+                                    event.title,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Jost',
