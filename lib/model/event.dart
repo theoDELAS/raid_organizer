@@ -4,7 +4,7 @@ class Evenement extends ChangeNotifier {
   int id;
   String title;
   String description;
-  DateTime date;
+  String date;
   String slots;
   bool is_private;
   String game_id;
