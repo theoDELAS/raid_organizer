@@ -37,6 +37,7 @@ class _EvenementsControllerState extends State<EvenementsController> {
   void initState() {
     super.initState();
     // is_private = false;
+    date = null;
     getEvents();
   }
 
@@ -108,7 +109,7 @@ class _EvenementsControllerState extends State<EvenementsController> {
                   actionExtentRatio: 0.25,
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.95,
-                    height: MediaQuery.of(context).size.height * 0.13,
+                    height: MediaQuery.of(context).size.height * 0.18,
                     margin: const EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
