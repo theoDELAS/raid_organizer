@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:raid_organizer/model/event.dart';
+import 'package:raid_organizer/model/game.dart';
 import 'package:raid_organizer/widget/HomeController.dart';
 
 class EventFriendCard extends StatefulWidget {
   @override
   _EventFriendCardState createState() => _EventFriendCardState();
+  Evenement evenement;
+
+  EventFriendCard(Evenement evenement) {
+    this.evenement = evenement;
+  }
 }
 
 class _EventFriendCardState extends State<EventFriendCard> {
@@ -65,7 +72,7 @@ class _EventFriendCardState extends State<EventFriendCard> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Username",
+                    widget.evenement.title,
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Jost',
@@ -82,7 +89,7 @@ class _EventFriendCardState extends State<EventFriendCard> {
                         size: 24.0,
                       ),
                       Text(
-                        "0/6",
+                        "0/" + widget.evenement.slots,
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Jost',
@@ -98,7 +105,7 @@ class _EventFriendCardState extends State<EventFriendCard> {
               child: Column(
                 children: [
                   Text(
-                    "Début : 20h15",
+                    "Début : " + widget.evenement.date,
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Jost',
